@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="20px" viewBox="0 0 28 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>menu bars</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD" sketch:type="MSArtboardGroup" transform="translate(-1376.000000, -24.000000)" fill="#9B9B9B">
+            <g id="Navbar" sketch:type="MSLayerGroup">
+                <path d="M1403,41 L1385,41 C1384.447,41 1384,41.448 1384,42 C1384,42.553 1384.447,43 1385,43 L1403,43 C1403.553,43 1404,42.553 1404,42 C1404,41.448 1403.553,41 1403,41 L1403,41 Z M1378,24 C1376.896,24 1376,24.896 1376,26 C1376,27.104 1376.896,28 1378,28 C1379.104,28 1380,27.104 1380,26 C1380,24.896 1379.104,24 1378,24 L1378,24 Z M1385,27 L1403,27 C1403.553,27 1404,26.553 1404,26 C1404,25.447 1403.553,25 1403,25 L1385,25 C1384.447,25 1384,25.447 1384,26 C1384,26.553 1384.447,27 1385,27 L1385,27 Z M1403,33 L1385,33 C1384.447,33 1384,33.448 1384,34 C1384,34.553 1384.447,35 1385,35 L1403,35 C1403.553,35 1404,34.553 1404,34 C1404,33.448 1403.553,33 1403,33 L1403,33 Z M1378,32 C1376.896,32 1376,32.896 1376,34 C1376,35.104 1376.896,36 1378,36 C1379.104,36 1380,35.104 1380,34 C1380,32.896 1379.104,32 1378,32 L1378,32 Z M1378,40 C1376.896,40 1376,40.896 1376,42 C1376,43.104 1376.896,44 1378,44 C1379.104,44 1380,43.104 1380,42 C1380,40.896 1379.104,40 1378,40 L1378,40 Z" id="menu-bars" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>
