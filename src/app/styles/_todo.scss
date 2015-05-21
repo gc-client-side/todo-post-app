@@ -23,7 +23,7 @@ ul {
 
   font-family: Arial;
   font-size: 75%;
-  color: #f7f7f7;
+  color: $light;
   background: #4455ff;
   box-shadow: 0.1em 0.15em 0.15em #555;
   position: absolute;
@@ -71,7 +71,7 @@ ul {
     right: 0;
     bottom: 0.02em;
     font-size: 1.3em;
-    color: #f7f7f7;
+    color: $light;
     @include clean;
   }
 

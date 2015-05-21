@@ -1,14 +1,18 @@
-<nav class="navbar" ng-controller="NavbarCtrl" role="navigation">
-  <a class="app-name" href="/">TodoPostIt</a>
+<header>
+  <nav class="navbar" ng-controller="NavbarCtrl" role="navigation">
+    <a id="app-name" href="/">TodoPostIt</a>
 
-  <input type="search" name="query" id="query">
+    <div class="search-posts">
+      <input type="search" />
+    </div>
 
-  <ul>
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-    <li>Clear</li>
-  </ul>
+    <ul class="filter-posts">
+      <li class="active">All</li>
+      <li>Active</li>
+      <li>Completed</li>
+      <li class="clear-posts">Clear Completed</li>
+    </ul>
 
-  <button></button>
-</nav>
+    <a href="javascript:void(0)" class="side-menu-btn">Menu</a>
+  </nav>
+</header>
