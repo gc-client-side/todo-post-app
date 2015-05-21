@@ -1,22 +1,20 @@
 <main id="canvas" ng-controller="CanvasCtrl">
-	<div id="post1">
-		<h3>This is the title</h3>
-		<p>Description goes here</p>
-		<button>add</button>
-		<ul>
-			<li>item1</li>
-			<li>item2</li>
-			<li>item3</li>
-		</ul>
-	</div>
-	<div id="post2">
-		<h3>This is the title</h3>
-		<p>Description goes here</p>
-		<button>add</button>
-		<ul>
-			<li>item1</li>
-			<li>item2</li>
-			<li>item3</li>
-		</ul>
+	<div  ng-repeat="post in posts">
+		<div id={{ post.id }} class="post">
+		
+		  <input type="text" class="post-title" placeholder="Title" ng-model="post.title"/>
+		
+		  <textarea name="" id="" cols="33" rows="3" class="post-description" placeholder="description">{{ post. description}}</textarea>
+		
+		  <div class="subtask_input">
+		    <input type="text" placeholder="subtask" />
+		    <button>+</button>
+		  </div>
+		
+		  <ul class="subtasks" ng-repeat="subtask in post.subtasks">
+		    <li class="subtask"><input type="checkbox" name="" id="" /><input type="text" name="" id="" ng-model="subtask" /></li>
+		  </ul>
+		
+		</div>
 	</div>
 </main>
