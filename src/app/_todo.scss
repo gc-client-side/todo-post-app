@@ -19,12 +19,14 @@ ul {
 }
 
 .post {
-  @include whileEditing;
+  /*@include whileEditing;*/
 
   font-family: Arial;
+  font-size: 75%;
   color: #f7f7f7;
   background: #4455ff;
-  box-shadow: 0.1em 0.1em 0.1em #555;
+  box-shadow: 0.1em 0.15em 0.15em #555;
+  position: absolute;
   width: $sideLeng;
   min-height: $sideLeng;
   padding: 0.5em 1em;
