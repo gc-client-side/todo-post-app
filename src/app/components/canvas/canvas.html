@@ -1,5 +1,5 @@
 <main id="canvas" ng-controller="CanvasCtrl" ng-click="addPost($event)">
-		<div ng-repeat="post in posts" id={{ post.id }} class="post" style="left: {{post.x}}px; top:{{post.y}}px" ng-mousemove="movePost($event)" ng-mousedown="startMove($event)" ng-mouseup="endMove()">
+<div ng-repeat="(key, post) in posts" id={{ post.id }} class="post" style="left: {{post.x}}px; top:{{post.y}}px; z-index:{{key}}" ng-mousemove="movePost($event)" ng-mousedown="startMove($event)" ng-mouseup="endMove($event, key)">
 	
 		  <input type="text" class="post-title" placeholder="Title" ng-model="post.title"/>
 		

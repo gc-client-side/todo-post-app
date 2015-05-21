@@ -41,7 +41,9 @@ ul {
     }
   }
   
-
+  &:hover {
+	  cursor: pointer;
+  }
 }
 
 .post-title {

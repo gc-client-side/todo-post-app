@@ -29,10 +29,6 @@ angular.module('todoPostApp')
     	}
     ];
 
-	//mouse dragging state
-	var dragging = false,
-		startX = undefined,
-		startY = undefined;
 
 	//get Y distance of canvas from top of the window
 	//to calculate correct Y-coordinate for new posts
@@ -51,24 +47,54 @@ angular.module('todoPostApp')
 		}
 	};
 
+	//mouse dragging state
+	var dragElem = undefined,
+		startLeft = undefined,
+		startTop = undefined,
+		startX = undefined,
+		startY = undefined;
+
 	$scope.startMove = function(e) {
-		dragging = true;
+		e.preventDefault();
+		dragElem = e.currentTarget;
+
+		//store drag state in current post so that
+		//event doesn't fire on other posts
+		dragElem.dragging = true;
+		//move dragged element to the top
+		dragElem.style.zIndex = $scope.posts.length;
+
+		startLeft = parseFloat(dragElem.style.left);
+		startTop = parseFloat(dragElem.style.top); 
 		startX = e.clientX;
 		startY = e.clientY - top;
-	}
+	};
 
 	$scope.movePost = function(e) {
-		if (dragging) {
-			e.target.style.left = parseFloat(e.target.style.left) + e.clientX - startX + 'px';		
-			e.target.style.top = parseFloat(e.target.style.top) + (e.clientY - top) - startY + 'px';		
-		}	
-	}
+		e.preventDefault();
 
-	$scope.endMove = function() {
-		dragging = false;
-		startX = undefined;
-		startY = undefined;
-	}
+		if (typeof dragElem !== "undefined" && dragElem.dragging) {
+			dragElem.style.left = e.clientX - startX + startLeft + 'px';		
+			dragElem.style.top = e.clientY - top - startY + startTop + 'px';		
+		}	
+	};
+
+	$scope.endMove = function(e, key) {
+		var temp;
+
+		e.currentTarget.dragging = false;
+
+		//save post x and y coordinates
+		$scope.posts[key].x = e.clientX - startX + startLeft;
+		$scope.posts[key].y = e.clientY - top - startY + startTop;
+		console.log($scope.posts[key]);
+
+		//exchange dragged post with last post to update order (and z-index)
+		temp = $scope.posts[key];
+		$scope.posts[key] = $scope.posts[$scope.posts.length-1]; 
+		$scope.posts[$scope.posts.length-1] = temp;
+		console.log($scope.posts);
+	};
 	
 	$scope.$watchCollection('posts', function(newPosts, oldPosts) {
 
