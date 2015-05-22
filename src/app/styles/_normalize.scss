@@ -88,6 +88,7 @@ template {
 
 a {
   background-color: transparent;
+  text-decoration: none;
 }
 
 /**
@@ -395,6 +396,13 @@ legend {
 
 textarea {
   overflow: auto;
+}
+
+/**
+ * Remove browser focus outline.
+ */
+textarea:focus, input:focus{
+  outline: 0;
 }
 
 /**

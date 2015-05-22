@@ -7,14 +7,127 @@
   z-index: 99999;
 }
 
+$sidenav-min-width: em(270);
+$sidenav-max-width: em(400);
 .sidenav {
+  color: $light;
   position: fixed;
   top: 0;
   right: 0;
   height: 100%;
   width: 27%;
-  min-width: em(220);
-  max-width: em(400);
+  min-width: $sidenav-min-width;
+  max-width: $sidenav-max-width;
   background: $dark-gray;
+  box-shadow: -2px 0 4px 0 rgba(0,0,0,0.2);
+  padding-top: em(90);
+  text-align: center;
+  overflow-y: auto;
   z-index: 999999;
+
+  .app-name {
+    color: #fff;
+    font-weight: 400;
+  }
+
+  @media screen and (max-width: em(640)) {
+    font-size: 0.9em;
+  }
+
+}
+
+.user-actions {
+  padding: 0;
+  margin: 0 auto 2em;
+
+  li {
+    margin: .7em auto;
+  }
+
+  a {
+    color: $light;
+    font-size: em(20);
+    font-weight: 300;
+
+    &:hover,
+    &:focus {
+      color: $orange;
+    }
+    &:active {
+      color: darken($orange, 15%);
+    }
+  }
+}
+
+.filter-options {
+  width: 80%;
+  min-width: $sidenav-min-width - em(40);
+  margin: auto;
+  border-top: 1px solid $gray;
+  border-bottom: 1px solid $gray;
+  padding: 1em 0;
+
+  li {
+    margin: 1.5em auto;
+
+    &:last-of-type {
+      margin-top: 2em;
+    }
+  }
+
+  a {
+    color: $light;
+    font-size: em(20);
+    font-weight: 200;
+    cursor: pointer;
+    border: 1px solid $dark-gray;
+    border-radius: 2em;
+    padding: 0.2em 1em;
+    transition: border 0.2s, color 0.2s;
+
+    &.active {
+      border-color: $blue;
+      background: #333;
+
+      &:hover,
+      &:focus {
+        border-color: $blue;
+        cursor: default;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      border-color: $gray;
+    }
+    &:active {
+      background: #333;
+    }
+
+    &.clear-posts {
+      border: 1px solid $orange;
+      //padding: 0 .5em;
+      border-radius: 4px;
+
+      &:hover,
+      &:focus {
+        color: $orange;
+      }
+    }
+  }
+
+}
+
+.creator-info {
+  margin-top: 3em;
+  font-size: em(18);
+  font-weight: 300;
+
+  .github-icon {
+    content: url('../assets/icons/github-icon.svg');
+  }
+
+  a {
+    color: $gray;
+  }
 }

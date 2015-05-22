@@ -4,7 +4,8 @@ header {
   background: #fff;
   color: $gray;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
-  position: relative;
+  position: fixed;
+  width: 100%;
   z-index: 9999999;
 }
 
@@ -13,13 +14,9 @@ header {
   margin: auto;
   padding: 0 1.5em;
   min-height: $nav-height;
-
-  a {
-    text-decoration: none;
-  }
 }
 
-#app-name {
+.app-name {
   font-size: em(24);
   color: $gray;
   font-weight: 300;
@@ -42,9 +39,13 @@ header {
   input {
     border: 1px solid #ddd;
     border-radius: 2em;
-    min-width: em(200);
+    width: em(200);
     padding: 0.3em 1em 0.3em 2.4em;
     font-weight: 300;
+
+    @media screen and (max-width: em(400)) {
+      width: em(140);
+    }
   }
 }
 
@@ -61,7 +62,7 @@ header {
     border-radius: 2em;
     margin: 0 0.2em;
     padding: 0 .7em;
-    transition: border 0.2s, background 0.2s, color 0.2s;
+    transition: border 0.2s, color 0.2s;
 
     &.active {
       border-color: $blue;
@@ -122,7 +123,7 @@ a.side-menu-btn {
 }
 
 @media screen and (max-width: em(510)) {
-  #app-name {
+  header .app-name {
     display: none;
   }
 }
