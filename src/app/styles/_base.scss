@@ -26,4 +26,9 @@ body {
 	font-family: $roboto;
   font-size: 1em;
   line-height: 1.5;
+
+  // 90% size when screen width less than 640px
+  @media screen and (max-width: em(640)) {
+    font-size: 0.9em;
+  }
 }

@@ -1,4 +1,4 @@
-$nav-height: em(65);
+$nav-height: em(60);
 
 header {
   background: #fff;
@@ -6,6 +6,7 @@ header {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
   position: fixed;
   width: 100%;
+  height: $nav-height;
   z-index: 9999999;
 }
 
@@ -13,14 +14,13 @@ header {
   max-width: em(1180);
   margin: auto;
   padding: 0 1.5em;
-  min-height: $nav-height;
+  height: $nav-height;
 }
 
 .app-name {
   font-size: em(24);
   color: $gray;
   font-weight: 300;
-  line-height: 65px;
 }
 
 .search-posts {
@@ -32,19 +32,23 @@ header {
   &::before {
     position: absolute;
     left: 0.5em;
-    top: 0.5em;
+    top: em(7);
     content: url('../assets/icons/magnifier.svg');
+    z-index: 1;
   }
 
   input {
+    $search-width: em(200);
     border: 1px solid #ddd;
     border-radius: 2em;
     width: em(200);
     padding: 0.3em 1em 0.3em 2.4em;
     font-weight: 300;
+    position: relative;
+    bottom: em(1);
 
-    @media screen and (max-width: em(400)) {
-      width: em(140);
+    @media screen and (max-width: em(360)) {
+      width: $search-width - em(30);
     }
   }
 }
@@ -60,7 +64,7 @@ header {
     cursor: pointer;
     border: 1px solid $light;
     border-radius: 2em;
-    margin: 0 0.2em;
+    margin: -0.2em 0.2em 0;
     padding: 0 .7em;
     transition: border 0.2s, color 0.2s;
 
@@ -101,9 +105,10 @@ header {
 a.side-menu-btn {
   content: url('../assets/icons/menu-bars.svg');
   float: right;
-  padding: 1.5em 0;
+  padding: 1.2em 0;
 }
 
+/* responsive media queries */
 @media screen and (max-width: em(1024)) {
   .filter-posts>.clear-posts {
     display: none;

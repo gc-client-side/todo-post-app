@@ -20,7 +20,7 @@ $sidenav-max-width: em(400);
   max-width: $sidenav-max-width;
   background: $dark-gray;
   box-shadow: -2px 0 4px 0 rgba(0,0,0,0.2);
-  padding-top: em(90);
+  padding-top: $nav-height+2em;
   text-align: center;
   overflow-y: auto;
   z-index: 999999;
@@ -29,11 +29,6 @@ $sidenav-max-width: em(400);
     color: #fff;
     font-weight: 400;
   }
-
-  @media screen and (max-width: em(640)) {
-    font-size: 0.9em;
-  }
-
 }
 
 .user-actions {
