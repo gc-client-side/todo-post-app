@@ -7,20 +7,11 @@ $sideLeng: 18em;
   background: transparent  
 }
 
-/* temporary styles to make editing easier */
-@mixin whileEditing {
-  float: left; 
-  margin-left: 2em;
-}
-
-
 ul {
   list-style: none;
 }
 
 .post {
-  /*@include whileEditing;*/
-
   font-family: Arial;
   font-size: 75%;
   color: $light;
@@ -63,6 +54,7 @@ ul {
   outline: none;
   background: transparent;
   position: relative;
+  margin-bottom: 0.5em;
 
   > input {
     font-size: 1.3em;
@@ -73,8 +65,13 @@ ul {
     right: 0;
     bottom: 0.02em;
     font-size: 1.3em;
+	line-height: 0.8;
     color: $light;
     @include clean;
+
+	&:focus {
+		outline: none;		
+	}
   }
 
 }
@@ -85,10 +82,11 @@ ul {
 }
 .subtask {
     margin: 0;
-    line-height: 1;
+    line-height: 1.5;
   
   > input {
     font-size: 1.1em;
+	padding-left: 0.5em;
   }
 }
  

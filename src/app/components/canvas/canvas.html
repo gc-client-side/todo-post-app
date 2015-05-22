@@ -3,15 +3,15 @@
 	
 		  <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
 		
-		  <textarea name="" id="" cols="33" rows="3" class="post-description" placeholder="description">{{ post. description}}</textarea>
-		
+		  <textarea name="" id="" cols="33" rows="3" class="post-description" placeholder="description">{{post.description}}</textarea>
+		  
 		  <div class="subtaskInput-container">
 		    <input class="subtaskInput" type="text" placeholder="subtask" ng-blur="clearSubtaskInput($event)" />
 		    <button ng-click="addSubtask($event, key)">+</button>
 		  </div>
 		
-		  <ul class="subtasks" ng-repeat="subtask in post.subtasks">
-		    <li class="subtask"><input type="checkbox" name="" id="" /><input type="text" name="" id="" ng-model="subtask" /></li>
+		  <ul class="subtasks">
+		    <li class="subtask" ng-repeat="subtask in post.subtasks"><input type="checkbox" name="" id="" /><input type="text" name="" id="" ng-model="subtask" /></li>
 		  </ul>
 	</div>
 </main>

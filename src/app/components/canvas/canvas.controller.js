@@ -58,23 +58,30 @@ angular.module('todoPostApp')
 
 	//handles subtasks added by button click
 	$scope.addSubtask = function(e, key) {
+		e.preventDefault();
+
 		var input = e.target.parentNode.firstElementChild,
 			value = input.value.trim();
 
 		if (value !== '') {
 			$scope.posts[key].subtasks.push(value);
 			input.value = '';
+			input.focus();
 		}
 	}
 
 	//clears subtask field on blur
 	$scope.clearSubtaskInput = function(e) {
-		e.target.value = '';
+		//slight delay required so that subtask button has an effect
+		setTimeout(function() {
+			e.target.value = '';
+		}, 50);
 	}
 
 	//handles enter key from any field on the post
 	$scope.handleEnter = function(e, key) {
 		if (e.keyCode === 13) {
+
 			var field = e.target,
 				post = e.currentTarget,
 				next;
@@ -84,14 +91,13 @@ angular.module('todoPostApp')
 
 				//if description is empty, focus 
 				if (next.value.trim() === '') {
-					post.querySelector(".post-description").focus();
+					//prevent line skip
+					e.preventDefault();
+					next.focus();
 				}
 				else {
 					field.blur();
 				}
-			}
-			else if (field.className.search("post-description") > -1) {
-				post.querySelector(".subtaskInput").focus();
 			}
 			else if (field.className.search("subtaskInput") > -1) {
 				var value = field.value.trim();
@@ -106,7 +112,7 @@ angular.module('todoPostApp')
 		//blur on esc key
 		else if (e.keyCode === 27) {
 			var active = document.activeElement;
-			document.activeElement.blur();
+			active.blur();
 		}
 	};
 
