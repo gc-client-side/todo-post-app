@@ -18,17 +18,17 @@ $orange: #F5A623;
 $roboto: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
 
-/* Resets
-   ========================================================================== */
-textarea:focus, input:focus{
-  outline: 0;
-}
+
 
 body {
   margin: 0;
-  //color: $gray;
 	background: $light;
 	font-family: $roboto;
   font-size: 1em;
   line-height: 1.5;
+
+  // 90% size when screen width less than 640px
+  @media screen and (max-width: em(640)) {
+    font-size: 0.9em;
+  }
 }
