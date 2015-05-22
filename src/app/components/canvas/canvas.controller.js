@@ -34,9 +34,18 @@ angular.module('todoPostApp')
 	//to calculate correct Y-coordinate for new posts
 	var top = document.getElementById('canvas').getClientRects()[0].top; 
 
+	//mouse dragging state
+	var dragElem = undefined,
+		dragging = false,
+		startLeft = undefined,
+		startTop = undefined,
+		startX = undefined,
+		startY = undefined;
+
 	$scope.addPost = function(e) {
 		//add post when clicking on canvas area only
-		if (e.target.id === "canvas") {
+		//make sure nothings dragging
+		if (e.target.id === "canvas" && !dragging) {
 			$scope.posts.push({ title: '',
 							    description: '',
 							    subtasks: [],
@@ -47,20 +56,75 @@ angular.module('todoPostApp')
 		}
 	};
 
-	//mouse dragging state
-	var dragElem = undefined,
-		startLeft = undefined,
-		startTop = undefined,
-		startX = undefined,
-		startY = undefined;
+	//handles subtasks added by button click
+	$scope.addSubtask = function(e, key) {
+		var input = e.target.parentNode.firstElementChild,
+			value = input.value.trim();
+
+		if (value !== '') {
+			$scope.posts[key].subtasks.push(value);
+			input.value = '';
+		}
+	}
+
+	//clears subtask field on blur
+	$scope.clearSubtaskInput = function(e) {
+		e.target.value = '';
+	}
+
+	//handles enter key from any field on the post
+	$scope.handleEnter = function(e, key) {
+		if (e.keyCode === 13) {
+			var field = e.target,
+				post = e.currentTarget,
+				next;
+
+			if (field.className.search("post-title") > -1) {
+				next = post.querySelector(".post-description");
+
+				//if description is empty, focus 
+				if (next.value.trim() === '') {
+					post.querySelector(".post-description").focus();
+				}
+				else {
+					field.blur();
+				}
+			}
+			else if (field.className.search("post-description") > -1) {
+				post.querySelector(".subtaskInput").focus();
+			}
+			else if (field.className.search("subtaskInput") > -1) {
+				var value = field.value.trim();
+
+				//make sure there's a value before adding subtask	
+				if (value !== '') {
+					$scope.posts[key].subtasks.push(value);
+					field.value = '';
+				}
+			}
+		}
+		//blur on esc key
+		else if (e.keyCode === 27) {
+			var active = document.activeElement;
+			document.activeElement.blur();
+		}
+	};
+
+	//stops drag events if post is being edited 
+	$scope.preventDrag = function() {
+		setTimeout(function() {
+			dragging = false;	
+		}, 0)
+	};
 
 	$scope.startMove = function(e) {
-		e.preventDefault();
+		/* should we have a drag tab
+		 * or an edit button?
+		 */
+		//e.preventDefault();
 		dragElem = e.currentTarget;
+		dragging = true;
 
-		//store drag state in current post so that
-		//event doesn't fire on other posts
-		dragElem.dragging = true;
 		//move dragged element to the top
 		dragElem.style.zIndex = $scope.posts.length;
 
@@ -73,27 +137,29 @@ angular.module('todoPostApp')
 	$scope.movePost = function(e) {
 		e.preventDefault();
 
-		if (typeof dragElem !== "undefined" && dragElem.dragging) {
+		if (dragging) {
 			dragElem.style.left = e.clientX - startX + startLeft + 'px';		
 			dragElem.style.top = e.clientY - top - startY + startTop + 'px';		
 		}	
 	};
 
 	$scope.endMove = function(e, key) {
-		var temp;
+		if (dragging) {
+			var temp;
 
-		e.currentTarget.dragging = false;
+			e.currentTarget.dragging = false;
 
-		//save post x and y coordinates
-		$scope.posts[key].x = e.clientX - startX + startLeft;
-		$scope.posts[key].y = e.clientY - top - startY + startTop;
-		console.log($scope.posts[key]);
+			//end drag state
+			dragging = false;
 
-		//exchange dragged post with last post to update order (and z-index)
-		temp = $scope.posts[key];
-		$scope.posts[key] = $scope.posts[$scope.posts.length-1]; 
-		$scope.posts[$scope.posts.length-1] = temp;
-		console.log($scope.posts);
+			//save post x and y coordinates
+			$scope.posts[key].x = e.clientX - startX + startLeft;
+			$scope.posts[key].y = e.clientY - top - startY + startTop;
+
+			//bring dragged post to the end to update z-indices
+			temp = $scope.posts.splice(key, 1);
+			$scope.posts = $scope.posts.concat(temp);
+		}
 	};
 	
 	$scope.$watchCollection('posts', function(newPosts, oldPosts) {
@@ -105,7 +171,6 @@ angular.module('todoPostApp')
 			//otherwise it selects second to last post 
 			setTimeout(function() {
 				var newPost = document.getElementById('canvas').lastElementChild;
-				console.log(newPost);
 				newPost.querySelector('.post-title').focus();
 			}, 0)
 		}
