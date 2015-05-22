@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="24px" height="25px" viewBox="0 0 24 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>magnifier</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD" sketch:type="MSArtboardGroup" transform="translate(-285.000000, -21.000000)" fill="#9B9B9B">
+            <g id="Navbar" sketch:type="MSLayerGroup">
+                <g id="Search-field" transform="translate(275.000000, 16.000000)" sketch:type="MSShapeGroup">
+                    <path d="M20.0976033,23.8428853 C15.3788867,23.8428853 11.5536506,20.0844163 11.5536506,15.4407191 C11.5536506,10.7970219 15.3788867,7.03105097 20.0976033,7.03105097 C24.8163198,7.03105097 28.6423062,10.7970219 28.6423062,15.4407191 C28.6423062,20.0844163 24.8163198,23.8428853 20.0976033,23.8428853 L20.0976033,23.8428853 Z M33.7721288,28.194007 L27.5762814,22.0949346 C29.1981995,20.3319801 30.1952066,18.0063806 30.1952066,15.4407191 C30.1952066,9.94930334 25.6745411,5.50065642 20.0976033,5.50065642 C14.5206655,5.50065642 10,9.94930334 10,15.4407191 C10,20.9246329 14.5206655,25.3732798 20.0976033,25.3732798 C22.5072245,25.3732798 24.7172943,24.5405651 26.4532419,23.1527073 L32.6738456,29.2742856 C32.9776739,29.5743629 33.4690506,29.5743629 33.7721288,29.2742856 C34.0759571,28.9817101 34.0759571,28.4940844 33.7721288,28.194007 L33.7721288,28.194007 Z" id="magnifier"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

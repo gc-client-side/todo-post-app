@@ -1,0 +1,126 @@
+$nav-height: em(65);
+
+header {
+  background: #fff;
+  color: $gray;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
+}
+
+.navbar {
+  max-width: em(1180);
+  margin: auto;
+  padding: 0 1.5em;
+  min-height: $nav-height;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+#app-name {
+  font-size: em(24);
+  color: $gray;
+  font-weight: 300;
+  line-height: 65px;
+}
+
+.search-posts {
+  display: inline-block;
+  position: relative;
+  margin: 0 2em 0 3em;
+  line-height: $nav-height;
+
+  &::before {
+    position: absolute;
+    left: 0.5em;
+    top: 0.5em;
+    content: url('../assets/icons/magnifier.svg');
+  }
+
+  input {
+    border: 1px solid #ddd;
+    border-radius: 2em;
+    min-width: em(200);
+    padding: 0.3em 1em 0.3em 2.4em;
+    font-weight: 300;
+  }
+}
+
+.filter-posts {
+  display: inline-block;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    font-size: em(18);
+    font-weight: 200;
+    cursor: pointer;
+    border: 1px solid $light;
+    border-radius: 2em;
+    margin: 0 0.2em;
+    padding: 0 .7em;
+    transition: border 0.2s, background 0.2s, color 0.2s;
+
+    &.active {
+      border-color: $blue;
+      background: $light;
+
+      &:hover,
+      &:focus {
+        border-color: $blue;
+        cursor: default;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      border-color: $light-gray;
+    }
+    &:active {
+      background: $light;
+    }
+  }
+
+  .clear-posts {
+    border: 1px solid $orange;
+    padding: 0 .5em;
+    border-radius: 4px;
+    margin-left: 1em;
+
+    &:hover,
+    &:focus {
+      color: $orange;
+      border-color: $orange;
+    }
+  }
+}
+
+a.side-menu-btn {
+  content: url('../assets/icons/menu-bars.svg');
+  float: right;
+  padding: 1.5em 0;
+}
+
+@media screen and (max-width: em(1024)) {
+  .filter-posts>.clear-posts {
+    display: none;
+  }
+}
+
+@media screen and (max-width: em(860)) {
+  .filter-posts {
+    display: none;
+  }
+}
+
+@media screen and (max-width: em(640)) {
+  .search-posts {
+    margin: 0 1em;
+  }
+}
+
+@media screen and (max-width: em(510)) {
+  #app-name {
+    display: none;
+  }
+}
