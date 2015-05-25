@@ -1,20 +1,28 @@
 $nav-height: em(60);
 
-header {
-  background: #fff;
-  color: $gray;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
+header.menu-container {
   position: fixed;
   width: 100%;
-  height: $nav-height;
   z-index: 9999999;
 }
 
-.navbar {
+.top-menu {
   max-width: em(1180);
   margin: auto;
   padding: 0 1.5em;
   height: $nav-height;
+
+  &::after {
+    content: '';
+    position: fixed;
+    width: 100%;
+    background: #fff;
+    height: $nav-height;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
 }
 
 .app-name {
