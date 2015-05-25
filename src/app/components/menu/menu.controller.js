@@ -2,5 +2,9 @@
 
 angular.module('todoPostApp')
   .controller('MenuCtrl', function ($scope) {
-    $scope.myName = 'Menu controller';
+    $scope.sideMenuOn = false;
+
+    $scope.toggleSideMenu = function() {
+      $scope.sideMenuOn ? $scope.sideMenuOn = false : $scope.sideMenuOn = true;
+    };
   });

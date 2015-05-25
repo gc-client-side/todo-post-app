@@ -1,4 +1,5 @@
 <header class="menu-container" ng-controller="MenuCtrl">
+
   <!-- Top Menu -->
   <nav class="top-menu" role="navigation">
     <a class="app-name" href="/">TodoPostIt</a>
@@ -11,10 +12,11 @@
       <li>Completed</li>
       <li class="clear-posts">Clear Completed</li>
     </ul>
-    <a href="javascript:void(0)" class="side-menu-btn">Menu</a>
+    <a ng-click="toggleSideMenu()" class="side-menu-btn">Menu</a>
   </nav>
+
   <!-- Side Menu -->
-  <nav class="side-menu" role="navigation">
+  <nav class="side-menu" role="navigation" ng-show="sideMenuOn">
     <a href="/" class="app-name">TodoPostIt</a>
     <ul class="user-actions">
       <li><a href="javascript:void(0)">Sign Up</a></li>
@@ -36,5 +38,5 @@
       </p>
     </div>
   </nav>
-  <div class="background-overlay"></div>
+  <div class="background-overlay" ng-show="sideMenuOn" ng-click="toggleSideMenu()"></div>
 </header>
