@@ -8,7 +8,11 @@ angular.module('todoPostApp')
       {
         title: 'Hello post',
         description: 'That is very hello',
-        subtasks: ['be a man', 'be a girl', 'be a dog'],
+	    color: 'yellow',
+	    checked: false,
+        subtasks: [{checked: false, name: 'be a man'},
+	  			   {checked: false, name: 'be a girl'},
+	  			   {checked: false, name: 'be a dog'}],
         position: {
           top: 100,
           left: 100,
@@ -18,7 +22,11 @@ angular.module('todoPostApp')
       {
         title: 'Hello post 2',
         description: 'It is over',
-        subtasks: ['go home', 'go school', 'be a dog'],
+	    color: 'orange',
+	    checked: false,
+        subtasks: [{checked: true, name: 'go home'},
+			 	   {checked: false, name: 'go school'},
+				   {checked: false, name: 'be a dog'}],
         position: {
           top: 100,
           left: 350,
@@ -28,7 +36,11 @@ angular.module('todoPostApp')
       {
         title: 'Hello post 3',
         description: 'not yet',
-        subtasks: ['go home', 'go school', 'be a dog'],
+		color: 'blue',
+	    checked: false,
+        subtasks: [{checked: true, name: 'go home'},
+			 	   {checked: false, name: 'go school'},
+				   {checked: false, name: 'be a dog'}],
         position: {
           top: 100,
           left: 600,
@@ -38,7 +50,11 @@ angular.module('todoPostApp')
       {
         title: 'Hello post 4',
         description: 'actually yes',
-        subtasks: ['be a man', 'be a girl', 'be a dog'],
+		color: 'green',
+	    checked: true,
+        subtasks: [{checked: true, name: 'go home'},
+			 	   {checked: false, name: 'go school'},
+				   {checked: false, name: 'be a dog'}],
         position: {
           top: 100,
           left: 850,
@@ -47,6 +63,14 @@ angular.module('todoPostApp')
       }
     ];
 
+    //post colors
+	$scope.colors = ['brown', 'orange', 'blue', 'light-blue',
+					 'green', 'purple', 'yellow'];
+
+	$scope.changeColor = function(key, color) {
+		$scope.posts[key].color = color;
+	}
+
 	  //get Y dista ce of canvas from top of the window
 	  //to calculate correct Y-coordinate for new posts
 	  var top = document.getElementById('canvas').getClientRects()[0].top;
@@ -54,14 +78,17 @@ angular.module('todoPostApp')
 	  $scope.addPost = function(e) {
 	  	//add post when clicking on canvas area only
 	  	//make sure nothings dragging
-	  	if (e.target.id === "canvas" && !dragging) {
+	  	if (e.target.id === "canvas") {
 	  		$scope.posts.push({ title: '',
 	  						    description: '',
 	  						    subtasks: [],
-	  						    x: e.clientX,
-	  						    y: e.clientY - top
+								color: 'yellow',
+								position: {
+									top: e.clientY - top,
+									left: e.clientX,
+									'z-index': $scope.posts.length
+								}
 	  						});
-
 	  	}
 	  };
 
@@ -71,11 +98,13 @@ angular.module('todoPostApp')
 	  	}
 	  };
 
+	  $scope.checkPost = function(key) {
+      	$scope.posts[key].checked = true;		 
+	  }
+
 	  $scope.removeSubtask = function(e, key, stKey) {
-	  	e.target.parentNode.className += " delete";
-	  	setTimeout(function() {
-	  		$scope.posts[key].subtasks.splice(stKey, 1);
-	  	}, 200);
+
+		$scope.posts[key].subtasks.splice(stKey, 1);
 	  };
 
 	  $scope.checkSubtask = function(e, key, stKey) {
@@ -90,7 +119,8 @@ angular.module('todoPostApp')
 	  		value = input.value.trim();
 
 	  	if (value !== '') {
-	  		$scope.posts[key].subtasks.push(value);
+	  		$scope.posts[key].subtasks.push({checked: false,
+											 name: value});
 	  		input.value = '';
 	  		input.focus();
 	  	}
@@ -130,7 +160,8 @@ angular.module('todoPostApp')
 
 	  			//make sure there's a value before adding subtask
 	  			if (value !== '') {
-	  				$scope.posts[key].subtasks.push(value);
+	  				$scope.posts[key].subtasks.push({ checked: false,
+													  name: value });
 	  				field.value = '';
 	  			}
 	  		}
@@ -193,9 +224,7 @@ angular.module('todoPostApp')
       $scope.moveState = moveInit;
     };
 
-
-
-	  $scope.$watchCollection('posts', function(newPosts, oldPosts) {
+	$scope.$watchCollection('posts', function(newPosts, oldPosts) {
 
 	  	//focus cursor on new post title upon push
 	  	//fire focus event on new posts only
