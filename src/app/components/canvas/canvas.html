@@ -1,25 +1,38 @@
-<main id="canvas" ng-controller="CanvasCtrl" ng-dblclick="addPost($event)"  ng-focus="updateFocus($event)">
-<div ng-repeat="(key, post) in posts" id={{ post.id }} class="post" style="left: {{post.x}}px; top:{{post.y}}px; z-index:{{key}}" ng-mousemove="movePost($event)" ng-mousedown="startMove($event)" ng-mouseup="endMove($event, key)" ng-click="preventDrag()" ng-keydown="handleEnter($event, key)">
-	<div class="post-buttons">
-		<i class="fa fa-check-circle"></i>
-		<i class="fa fa-times" ng-click="removePost(key)"></i>
-	</div>
-	
-		  <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
-		
-		  <textarea name="" id="" cols="33" rows="3" class="post-description" placeholder="description">{{post.description}}</textarea>
-		  
-		  <div class="subtaskInput-container">
-		    <input class="subtaskInput" type="text" placeholder="subtask" ng-blur="clearSubtaskInput($event)" />
-		    <button ng-click="addSubtask($event, key)">+</button>
-		  </div>
-		
-		  <ul class="subtasks">
-			  <li class="subtask" ng-repeat="(stKey, subtask) in post.subtasks">
-			  <input type="text" name="" id="" ng-model="subtask" />
-			  <i class="fa fa-check-circle" ng-click="checkSubtask($event, key, stKey)"></i>
-			  <i class="fa fa-times" ng-click="removeSubtask($event, key, stKey)"></i>
-			  </li>
-		  </ul>
-</div>
+<main id="canvas"
+      ng-controller="CanvasCtrl"
+      ng-dblclick="addPost($event)"
+      ng-mousemove="duringMove($event)"
+      ng-mouseup="endMove()"
+      ng-focus="updateFocus($event)">
+
+  <div ng-repeat="(key, post) in posts"
+       id={{ post.id }}
+       class="post"
+       ng-style="post.position"
+       ng-mousedown="startMove(key, $event)"
+       ng-keydown="handleEnter($event, key)">
+
+  	<div class="post-buttons">
+  		<i class="fa fa-check-circle"></i>
+  		<i class="fa fa-times" ng-click="removePost(key)"></i>
+  	</div>
+
+  		  <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
+
+  		  <textarea name="" id="" cols="33" rows="3" class="post-description" placeholder="description">{{post.description}}</textarea>
+
+  		  <div class="subtaskInput-container">
+  		    <input class="subtaskInput" type="text" placeholder="subtask" ng-blur="clearSubtaskInput($event)" />
+  		    <button ng-click="addSubtask($event, key)">+</button>
+  		  </div>
+
+  		  <ul class="subtasks">
+  			  <li class="subtask" ng-repeat="(stKey, subtask) in post.subtasks">
+  			  <input type="text" name="" id="" ng-model="subtask" />
+  			  <i class="fa fa-check-circle" ng-click="checkSubtask($event, key, stKey)"></i>
+  			  <i class="fa fa-times" ng-click="removeSubtask($event, key, stKey)"></i>
+  			  </li>
+  		  </ul>
+  </div>
+
 </main>

@@ -2,200 +2,206 @@
 
 angular.module('todoPostApp')
   .controller('CanvasCtrl', function ($scope) {
+
+    // post format
     $scope.posts = [
-		{ title: 'Hello post',
-		  description: 'That is very hello',
-    	  subtasks: ['be a man', 'be a girl', 'be a dog'],
-		  x: 100,
-		  y: 100
-    	},
-    	{ title: 'Hello post 2',
-    	  description: 'It is over',
-    	  subtasks: ['go home', 'go school', 'be a dog'],
-		  x: 350,
-		  y: 100
-    	},
-    	{ title: 'Hello post 2',
-    	  description: 'It is over',
-    	  subtasks: ['go home', 'go school', 'be a dog'],
-		  x: 600,
-		  y: 100
-    	},
-    	{ title: 'Hello post 2',
-    	  description: 'It is over',
-    	  subtasks: ['go home', 'go school', 'be a dog'],
-		  x: 850,
-		  y: 100
-    	}
+      {
+        title: 'Hello post',
+        description: 'That is very hello',
+        subtasks: ['be a man', 'be a girl', 'be a dog'],
+        position: {
+          top: 100,
+          left: 100,
+          'z-index': 1
+        }
+      },
+      {
+        title: 'Hello post 2',
+        description: 'It is over',
+        subtasks: ['go home', 'go school', 'be a dog'],
+        position: {
+          top: 100,
+          left: 350,
+          'z-index': 1
+        }
+      },
+      {
+        title: 'Hello post 3',
+        description: 'not yet',
+        subtasks: ['go home', 'go school', 'be a dog'],
+        position: {
+          top: 100,
+          left: 600,
+          'z-index': 1
+        }
+      },
+      {
+        title: 'Hello post 4',
+        description: 'actually yes',
+        subtasks: ['be a man', 'be a girl', 'be a dog'],
+        position: {
+          top: 100,
+          left: 850,
+          'z-index': 1
+        }
+      }
     ];
 
+	  //get Y dista ce of canvas from top of the window
+	  //to calculate correct Y-coordinate for new posts
+	  var top = document.getElementById('canvas').getClientRects()[0].top;
 
-	//get Y distance of canvas from top of the window
-	//to calculate correct Y-coordinate for new posts
-	var top = document.getElementById('canvas').getClientRects()[0].top; 
+	  $scope.addPost = function(e) {
+	  	//add post when clicking on canvas area only
+	  	//make sure nothings dragging
+	  	if (e.target.id === "canvas" && !dragging) {
+	  		$scope.posts.push({ title: '',
+	  						    description: '',
+	  						    subtasks: [],
+	  						    x: e.clientX,
+	  						    y: e.clientY - top
+	  						});
 
-	//mouse dragging state
-	var dragElem = undefined,
-		dragging = false,
-		startLeft = undefined,
-		startTop = undefined,
-		startX = undefined,
-		startY = undefined;
+	  	}
+	  };
 
-	$scope.addPost = function(e) {
-		//add post when clicking on canvas area only
-		//make sure nothings dragging
-		if (e.target.id === "canvas" && !dragging) {
-			$scope.posts.push({ title: '',
-							    description: '',
-							    subtasks: [],
-							    x: e.clientX,
-							    y: e.clientY - top
-							});
+	  $scope.removePost = function(key) {
+	  	if (confirm("Are you sure? Deletes are permanent!")) {
+	  		$scope.posts.splice(key, 1);
+	  	}
+	  };
 
-		}
-	};
+	  $scope.removeSubtask = function(e, key, stKey) {
+	  	e.target.parentNode.className += " delete";
+	  	setTimeout(function() {
+	  		$scope.posts[key].subtasks.splice(stKey, 1);
+	  	}, 200);
+	  };
 
-	$scope.removePost = function(key) {
-		if (confirm("Are you sure? Deletes are permanent!")) {
-			$scope.posts.splice(key, 1);
-		}
-	};
+	  $scope.checkSubtask = function(e, key, stKey) {
+	  	e.target.parentNode.className += " checked";
+	  };
 
-	$scope.removeSubtask = function(e, key, stKey) {
-		e.target.parentNode.className += " delete";
-		setTimeout(function() {
-			$scope.posts[key].subtasks.splice(stKey, 1);
-		}, 200);
-	}
+	  //handles subtasks added by button click
+	  $scope.addSubtask = function(e, key) {
+	  	e.preventDefault();
 
-	$scope.checkSubtask = function(e, key, stKey) {
-		e.target.parentNode.className += " checked";
-	}
+	  	var input = e.target.parentNode.firstElementChild,
+	  		value = input.value.trim();
 
-	//handles subtasks added by button click
-	$scope.addSubtask = function(e, key) {
-		e.preventDefault();
+	  	if (value !== '') {
+	  		$scope.posts[key].subtasks.push(value);
+	  		input.value = '';
+	  		input.focus();
+	  	}
+	  };
 
-		var input = e.target.parentNode.firstElementChild,
-			value = input.value.trim();
+	  //clears subtask field on blur
+	  $scope.clearSubtaskInput = function(e) {
+	  	//slight delay required so that subtask button has an effect
+	  	setTimeout(function() {
+	  		e.target.value = '';
+	  	}, 50);
+	  };
 
-		if (value !== '') {
-			$scope.posts[key].subtasks.push(value);
-			input.value = '';
-			input.focus();
-		}
-	};
+	  //handles enter key from any field on the post
+	  $scope.handleEnter = function(e, key) {
+	  	if (e.keyCode === 13) {
 
-	//clears subtask field on blur
-	$scope.clearSubtaskInput = function(e) {
-		//slight delay required so that subtask button has an effect
-		setTimeout(function() {
-			e.target.value = '';
-		}, 50);
-	}
+	  		var field = e.target,
+	  			post = e.currentTarget,
+	  			next;
 
-	//handles enter key from any field on the post
-	$scope.handleEnter = function(e, key) {
-		if (e.keyCode === 13) {
+	  		if (field.className.search("post-title") > -1) {
+	  			next = post.querySelector(".post-description");
 
-			var field = e.target,
-				post = e.currentTarget,
-				next;
+	  			//if description is empty, focus
+	  			if (next.value.trim() === '') {
+	  				//prevent line skip
+	  				e.preventDefault();
+	  				next.focus();
+	  			}
+	  			else {
+	  				field.blur();
+	  			}
+	  		}
+	  		else if (field.className.search("subtaskInput") > -1) {
+	  			var value = field.value.trim();
 
-			if (field.className.search("post-title") > -1) {
-				next = post.querySelector(".post-description");
+	  			//make sure there's a value before adding subtask
+	  			if (value !== '') {
+	  				$scope.posts[key].subtasks.push(value);
+	  				field.value = '';
+	  			}
+	  		}
+	  	}
+	  	//blur on esc key
+	  	else if (e.keyCode === 27) {
+	  		var active = document.activeElement;
+	  		active.blur();
+	  	}
+	  };
 
-				//if description is empty, focus 
-				if (next.value.trim() === '') {
-					//prevent line skip
-					e.preventDefault();
-					next.focus();
-				}
-				else {
-					field.blur();
-				}
-			}
-			else if (field.className.search("subtaskInput") > -1) {
-				var value = field.value.trim();
+	  /* new dragging implementation (ng-style) */
 
-				//make sure there's a value before adding subtask	
-				if (value !== '') {
-					$scope.posts[key].subtasks.push(value);
-					field.value = '';
-				}
-			}
-		}
-		//blur on esc key
-		else if (e.keyCode === 27) {
-			var active = document.activeElement;
-			active.blur();
-		}
-	};
+    // initial drag state
+    var moveInit = { draggable: false };
+    $scope.moveState = moveInit;
 
-	//stops drag events if post is being edited 
-	$scope.preventDrag = function() {
-		setTimeout(function() {
-			dragging = false;	
-		}, 0)
-	};
+    // ng-mousedown
+    $scope.startMove = function(key, e) {
+      var pos = $scope.posts[key].position;
 
-	$scope.startMove = function(e) {
-		/* should we have a drag tab
-		 * or an edit button?
-		 */
-		//e.preventDefault();
-		dragElem = e.currentTarget;
-		dragging = true;
+      $scope.moveState = {
+        draggable: true,
+        startX: pos.left,
+        startY: pos.top,
+        startZ: pos['z-index'],
+        clientX: e.clientX,
+        clientY: e.clientY,
+        key: key
+      };
+    };
 
-		//move dragged element to the top
-		dragElem.style.zIndex = $scope.posts.length;
+    // ng-mousemove
+	  $scope.duringMove = function(e) {
+      e.preventDefault();
 
-		startLeft = parseFloat(dragElem.style.left);
-		startTop = parseFloat(dragElem.style.top); 
-		startX = e.clientX;
-		startY = e.clientY - top;
-	};
+      if ($scope.moveState.draggable) {
+        var moveState = $scope.moveState,
+            post = $scope.posts[moveState.key];
 
-	$scope.movePost = function(e) {
-		e.preventDefault();
+        post.position = {
+          top: moveState.startY + (e.clientY - moveState.clientY),
+          left: moveState.startX + (e.clientX - moveState.clientX),
+          'z-index': moveState.startZ
+        };
+      }
+	  };
 
-		if (dragging) {
-			dragElem.style.left = e.clientX - startX + startLeft + 'px';		
-			dragElem.style.top = e.clientY - top - startY + startTop + 'px';		
-		}	
-	};
+    // ng-mouseup
+    $scope.endMove = function() {
+      $scope.moveState = moveInit;
+    };
 
-	$scope.endMove = function(e, key) {
-		if (dragging) {
-			var temp;
+    // ng-click
+    /*$scope.preventMove = function() {
+      $scope.moveState = moveInit;
+    };*/
 
-			e.currentTarget.dragging = false;
 
-			//end drag state
-			dragging = false;
 
-			//save post x and y coordinates
-			$scope.posts[key].x = e.clientX - startX + startLeft;
-			$scope.posts[key].y = e.clientY - top - startY + startTop;
+	  $scope.$watchCollection('posts', function(newPosts, oldPosts) {
 
-			//bring dragged post to the end to update z-indices
-			temp = $scope.posts.splice(key, 1);
-			$scope.posts = $scope.posts.concat(temp);
-		}
-	};
-	
-	$scope.$watchCollection('posts', function(newPosts, oldPosts) {
-
-		//focus cursor on new post title upon push
-		//fire focus event on new posts only
-		if (newPosts.length > oldPosts.length) {
-			//add Title focus callback to the end of queue
-			//otherwise it selects second to last post 
-			setTimeout(function() {
-				var newPost = document.getElementById('canvas').lastElementChild;
-				newPost.querySelector('.post-title').focus();
-			}, 0)
-		}
-	});
+	  	//focus cursor on new post title upon push
+	  	//fire focus event on new posts only
+	  	if (newPosts.length > oldPosts.length) {
+	  		//add Title focus callback to the end of queue
+	  		//otherwise it selects second to last post
+	  		setTimeout(function() {
+	  			var newPost = document.getElementById('canvas').lastElementChild;
+	  			newPost.querySelector('.post-title').focus();
+	  		}, 0)
+	  	}
+	  });
   });
