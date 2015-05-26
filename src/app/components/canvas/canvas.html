@@ -6,7 +6,6 @@
       ng-focus="updateFocus($event)">
 
   <div ng-repeat="(key, post) in posts"
-       id={{ post.id }}
        class="post"
        ng-style="post.position"
        ng-mousedown="startMove(key, $event)"
