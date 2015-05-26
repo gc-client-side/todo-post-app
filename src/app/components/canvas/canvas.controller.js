@@ -22,7 +22,7 @@ angular.module('todoPostApp')
         position: {
           top: 100,
           left: 350,
-          'z-index': 1
+          'z-index': 2
         }
       },
       {
@@ -32,7 +32,7 @@ angular.module('todoPostApp')
         position: {
           top: 100,
           left: 600,
-          'z-index': 1
+          'z-index': 3
         }
       },
       {
@@ -42,7 +42,7 @@ angular.module('todoPostApp')
         position: {
           top: 100,
           left: 850,
-          'z-index': 1
+          'z-index': 4
         }
       }
     ];
@@ -145,22 +145,34 @@ angular.module('todoPostApp')
 	  /* new dragging implementation (ng-style) */
 
     // initial drag state
-    var moveInit = { draggable: false };
+    var moveInit = { draggable: false},
+        highestIndex = $scope.posts.length;
+
     $scope.moveState = moveInit;
 
     // ng-mousedown
     $scope.startMove = function(key, e) {
-      var pos = $scope.posts[key].position;
+      var posts = $scope.posts,
+          pos = posts[key].position;
+
+      // post being clicked sets on top
+      pos['z-index'] = highestIndex;
 
       $scope.moveState = {
         draggable: true,
         startX: pos.left,
         startY: pos.top,
-        startZ: pos['z-index'],
         clientX: e.clientX,
         clientY: e.clientY,
         key: key
       };
+
+      // rearrange z-index for rest posts
+      angular.forEach(posts, function(post, i) {
+        if (i != key) // if not the one being clicked
+          if (post.position['z-index']) // if z-index not 0
+            post.position['z-index'] -= 1;
+      });
     };
 
     // ng-mousemove
@@ -171,11 +183,8 @@ angular.module('todoPostApp')
         var moveState = $scope.moveState,
             post = $scope.posts[moveState.key];
 
-        post.position = {
-          top: moveState.startY + (e.clientY - moveState.clientY),
-          left: moveState.startX + (e.clientX - moveState.clientX),
-          'z-index': moveState.startZ
-        };
+        post.position.top = moveState.startY + (e.clientY - moveState.clientY);
+        post.position.left = moveState.startX + (e.clientX - moveState.clientX);
       }
 	  };
 
@@ -183,11 +192,6 @@ angular.module('todoPostApp')
     $scope.endMove = function() {
       $scope.moveState = moveInit;
     };
-
-    // ng-click
-    /*$scope.preventMove = function() {
-      $scope.moveState = moveInit;
-    };*/
 
 
 

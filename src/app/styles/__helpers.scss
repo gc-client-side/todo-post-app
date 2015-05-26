@@ -28,3 +28,9 @@ $em-base: 16px !default;
   }
   @return ($pxval / $base) * 1rem;
 }
+
+/* Helper Classes
+   ========================================================================== */
+.unselectable {
+  user-select: none;
+}
