@@ -56,6 +56,23 @@ angular.module('todoPostApp')
 		}
 	};
 
+	$scope.removePost = function(key) {
+		if (confirm("Are you sure? Deletes are permanent!")) {
+			$scope.posts.splice(key, 1);
+		}
+	};
+
+	$scope.removeSubtask = function(e, key, stKey) {
+		e.target.parentNode.className += " delete";
+		setTimeout(function() {
+			$scope.posts[key].subtasks.splice(stKey, 1);
+		}, 200);
+	}
+
+	$scope.checkSubtask = function(e, key, stKey) {
+		e.target.parentNode.className += " checked";
+	}
+
 	//handles subtasks added by button click
 	$scope.addSubtask = function(e, key) {
 		e.preventDefault();
@@ -68,7 +85,7 @@ angular.module('todoPostApp')
 			input.value = '';
 			input.focus();
 		}
-	}
+	};
 
 	//clears subtask field on blur
 	$scope.clearSubtaskInput = function(e) {

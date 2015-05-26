@@ -1,5 +1,9 @@
 <main id="canvas" ng-controller="CanvasCtrl" ng-dblclick="addPost($event)"  ng-focus="updateFocus($event)">
 <div ng-repeat="(key, post) in posts" id={{ post.id }} class="post" style="left: {{post.x}}px; top:{{post.y}}px; z-index:{{key}}" ng-mousemove="movePost($event)" ng-mousedown="startMove($event)" ng-mouseup="endMove($event, key)" ng-click="preventDrag()" ng-keydown="handleEnter($event, key)">
+	<div class="post-buttons">
+		<i class="fa fa-check-circle"></i>
+		<i class="fa fa-times" ng-click="removePost(key)"></i>
+	</div>
 	
 		  <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
 		
@@ -11,7 +15,11 @@
 		  </div>
 		
 		  <ul class="subtasks">
-		    <li class="subtask" ng-repeat="subtask in post.subtasks"><input type="checkbox" name="" id="" /><input type="text" name="" id="" ng-model="subtask" /></li>
+			  <li class="subtask" ng-repeat="(stKey, subtask) in post.subtasks">
+			  <input type="text" name="" id="" ng-model="subtask" />
+			  <i class="fa fa-check-circle" ng-click="checkSubtask($event, key, stKey)"></i>
+			  <i class="fa fa-times" ng-click="removeSubtask($event, key, stKey)"></i>
+			  </li>
 		  </ul>
-	</div>
+</div>
 </main>

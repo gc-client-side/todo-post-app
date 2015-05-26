@@ -1,10 +1,26 @@
 /* minimum side length of post */
 $sideLeng: 18em;
 
-
 @mixin clean {
   border: none;
   background: transparent  
+}
+
+/* stages for icon visbility */ 
+@mixin icons1 {
+	opacity: 0;
+	visibility: hidden;
+}
+
+@mixin icons2 {
+	opacity: 0.6;
+	transition: opacity 0.2s;
+	visibility: visible;
+}
+
+@mixin icons3 {
+	opacity: 1;
+	transition: opacity 0.2s;
 }
 
 ul {
@@ -34,8 +50,32 @@ ul {
   
   &:hover {
 	  cursor: pointer;
+
+	  .fa {
+	  	@include icons2;
+	  }
   }
 }
+
+.post-buttons {
+	display: block;
+	font-size: 2em;
+	right: -0.4em;
+	top: -0.4em;
+	position: absolute;
+
+	.fa {
+		display: block;
+		color: white;
+		line-height: 1;
+		@include icons1;
+
+		&:hover {
+			@include icons3;
+		}
+	}
+}
+
 
 .post-title {
   font-size: 1.6em;  
@@ -80,14 +120,57 @@ ul {
   margin: 0;
   padding-left: 0.5em;
 }
+
 .subtask {
-    margin: 0;
-    line-height: 1.5;
-  
-  > input {
-    font-size: 1.1em;
-	padding-left: 0.5em;
-  }
+	margin: 0;
+	font-size: 1.1em;
+	line-height: 1.5;
+	position: relative;
+
+	> input {
+		font-size: 1em;
+		padding-left: 0.5em;
+	}
+
+	.fa {
+		@include icons1;
+	}
+
+	&:hover .fa {
+		visibility: visible;
+		@include icons2;
+
+	 &:hover {
+		 @include icons3;
+	 }
+	}
+
+	&.delete {
+		transform: scaleY(0);
+		transition: transform 0.15s;
+	} 
+
+   &:before {
+	 content: "";
+	 position: absolute;
+	 border-bottom: 1px solid #999;
+	 width: 0%;
+	 top: 0.75em;
+   }
+
+   &.checked > input {
+	 color: #999;
+	 transition: color 0.1s;
+   }
+
+   &.checked .fa-check-circle {
+	  @include icons1;
+   }
+
+   &.checked:before {
+	 width: 90%;
+	 transition: width 0.3s ease-in 0.1s;
+   }
 }
  
 
