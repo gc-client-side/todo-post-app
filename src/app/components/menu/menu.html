@@ -1,0 +1,42 @@
+<header class="menu-container" ng-controller="MenuCtrl">
+
+  <!-- Top Menu -->
+  <nav class="top-menu" role="navigation">
+    <a class="app-name" href="/">TodoPostIt</a>
+    <div class="search-posts">
+      <input type="search" />
+    </div>
+    <ul class="filter-posts">
+      <li class="active">All</li>
+      <li>Active</li>
+      <li>Completed</li>
+      <li class="clear-posts">Clear Completed</li>
+    </ul>
+    <a ng-click="toggleSideMenu()" class="side-menu-btn">Menu</a>
+  </nav>
+
+  <!-- Side Menu -->
+  <nav class="side-menu" role="navigation" ng-show="sideMenuOn">
+    <a href="/" class="app-name">TodoPostIt</a>
+    <ul class="user-actions">
+      <li><a href="javascript:void(0)">Sign Up</a></li>
+      <li><a href="javascript:void(0)">Log In</a></li>
+      <li><a href="javascript:void(0)">About</a></li>
+    </ul>
+    <ul class="filter-options">
+      <li><a class="active" href="javascript:void(0)">All</a></li>
+      <li><a href="javascript:void(0)">Active</a></li>
+      <li><a href="javascript:void(0)">Completed</a></li>
+      <li><a class="clear-posts" href="javascript:void(0)">Clear Completed</a></li>
+    </ul>
+    <div class="creator-info">
+      <a class="github-icon" href="https://github.com/gc-client-side/todo-post-app">Source on GitHub</a>
+      <p>Created By
+        <br/>
+        <a href="http://slevin.im/">Slevin</a> &
+        <a href="https://github.com/joehandlebar">Sukhoon</a>
+      </p>
+    </div>
+  </nav>
+  <div class="background-overlay" ng-show="sideMenuOn" ng-click="toggleSideMenu()"></div>
+</header>
