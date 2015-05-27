@@ -1,90 +1,13 @@
 'use strict';
 
 angular.module('todoPostApp')
-  .controller('CanvasCtrl', function($scope) {
+  .controller('CanvasCtrl', ['$scope', '$http', function($scope, $http) {
 
-    // post format
-    $scope.posts = [{
-      title: 'Hello post',
-      description: 'That is very hello',
-      color: 'yellow',
-      checked: false,
-      subtasks: [{
-        checked: false,
-        name: 'be a man'
-      }, {
-        checked: false,
-        name: 'be a girl'
-      }, {
-        checked: false,
-        name: 'be a dog'
-      }],
-      position: {
-        top: 100,
-        left: 100,
-        'z-index': 1
-      }
-    }, {
-      title: 'Hello post 2',
-      description: 'It is over',
-      color: 'orange',
-      checked: false,
-      subtasks: [{
-        checked: true,
-        name: 'go home'
-      }, {
-        checked: false,
-        name: 'go school'
-      }, {
-        checked: false,
-        name: 'be a dog'
-      }],
-      position: {
-        top: 100,
-        left: 350,
-        'z-index': 2
-      }
-    }, {
-      title: 'Hello post 3',
-      description: 'not yet',
-      color: 'blue',
-      checked: false,
-      subtasks: [{
-        checked: true,
-        name: 'go home'
-      }, {
-        checked: false,
-        name: 'go school'
-      }, {
-        checked: false,
-        name: 'be a dog'
-      }],
-      position: {
-        top: 100,
-        left: 600,
-        'z-index': 3
-      }
-    }, {
-      title: 'Hello post 4',
-      description: 'actually yes',
-      color: 'green',
-      checked: true,
-      subtasks: [{
-        checked: true,
-        name: 'go home'
-      }, {
-        checked: false,
-        name: 'go school'
-      }, {
-        checked: false,
-        name: 'be a dog'
-      }],
-      position: {
-        top: 100,
-        left: 850,
-        'z-index': 4
-      }
-    }];
+    $scope.posts = [];
+
+    $http.get('app/data/posts.json').success(function(data) {
+      $scope.posts = data;
+    });
 
     //post colors
     $scope.colors = ['brown', 'orange', 'blue', 'light-blue',
@@ -93,7 +16,7 @@ angular.module('todoPostApp')
 
     $scope.changeColor = function(key, color) {
       $scope.posts[key].color = color;
-    }
+    };
 
     //get Y dista ce of canvas from top of the window
     //to calculate correct Y-coordinate for new posts
@@ -267,4 +190,4 @@ angular.module('todoPostApp')
         }, 0)
       }
     });
-  });
+  }]);
