@@ -1,6 +1,6 @@
 'use strict';
 
-AppControllers
+angular.module('todoPostApp')
   .controller('CanvasCtrl', ['$scope', '$http', function($scope, $http) {
 
     $scope.posts = [];
