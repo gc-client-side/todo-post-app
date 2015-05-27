@@ -1,0 +1,14 @@
+<div>
+<div class="subtaskInput-container">
+<input class="subtaskInput" type="text" placeholder="subtask" ng-blur="clearSubtaskInput($event)" />
+<button ng-click="addSubtask($event, key)">+</button>
+</div>
+
+<ul class="subtasks">
+  <li class="subtask {{subtask.checked ? 'checked' : ''}}" ng-repeat="(stKey, subtask) in post.subtasks track by $index">
+  <input type="text" name="" id="" ng-model="subtask.name" />
+  <i class="fa fa-check-circle " ng-click="checkSubtask($event, key, stKey)"></i>
+  <i class="fa fa-times" ng-click="removeSubtask($event, key, stKey)"></i>
+  </li>
+</ul>
+</div>
