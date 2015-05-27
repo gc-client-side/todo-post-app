@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('todoPostApp', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngRoute'])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'app/main/main.html',
@@ -10,5 +10,4 @@ angular.module('todoPostApp', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize'
       .otherwise({
         redirectTo: '/'
       });
-  })
-;
+  }]);
