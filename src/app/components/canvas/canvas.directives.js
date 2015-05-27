@@ -67,6 +67,7 @@ angular.module('todoPostApp')
 
 			$scope.changeColor = function(key, color) {
 				$scope.posts[key].color = color;
+				$scope.saveChange(key)
 			};
 
 		},
@@ -85,7 +86,7 @@ angular.module('todoPostApp')
 
 			  $scope.removePost = function(key) {
 				if (confirm("Are you sure? Deletes are permanent!")) {
-					$scope.posts.splice(key, 1);
+					$scope.posts.$remove($scope.posts[key]);
 				}
 			  };
 
@@ -106,10 +107,13 @@ angular.module('todoPostApp')
 
 		  $scope.removeSubtask = function(e, key, stKey) {
 			$scope.posts[key].subtasks.splice(stKey, 1);
+			$scope.saveChange(key);
 		  };
 
 		  $scope.checkSubtask = function(e, key, stKey) {
 			e.target.parentNode.className += " checked";
+			$scope.posts[key].subtasks[stKey].checked = (true) ? false: true;
+			$scope.saveChange(key);
 		  };
 
 		  //handles subtasks added by button click

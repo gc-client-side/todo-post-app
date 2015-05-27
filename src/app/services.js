@@ -3,11 +3,14 @@ angular.module('todoPostApp')
 .factory('postdrag', function() {
 	var module = {},
 		moveState = { draggable: false },
+		_currPost,
+		//reference to posts and save function
 		_posts,
-		_currPost;
+		_saveFn;
 
-	module.init = function(posts) {
+	module.init = function(posts, saveFn) {
 		_posts = posts;	
+		_saveFn = saveFn;
 	}
 
 	module.startMove = function(key, e) {
@@ -31,6 +34,7 @@ angular.module('todoPostApp')
 	  angular.forEach(_posts, function(post, i) {
 		  if (i !== key && post.position['z-index']) { // if not the one being clicked, and z-index is not 0
 			post.position['z-index'] -= 1;
+			_saveFn(i);
 		  } 
 	  });
 	}
@@ -45,12 +49,10 @@ angular.module('todoPostApp')
 	}
 
 	module.endMove = function() {
-		moveState = {draggable: false};
+		_saveFn(moveState.key); 
+		moveState = {draggable: false}; 
 	}
 
 	return module;
 })
 
-.factory('postdata', function() {
-	
-})

@@ -6,8 +6,8 @@
 		<post-colors></post-colors>
 		<post-buttons></post-buttons>
 
-  		<input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
-  		<textarea name="" id="" cols="33" rows="3" class="post-description" placeholder="description">{{post.description}}</textarea>
+  		<input type="text" class="post-title" placeholder="Title" ng-model="post.title" ng-change="saveChange(key)" />
+  		<textarea name="" id="" cols="33" rows="3" class="post-description" ng-change="saveChange(key)" ng-model="post.description" placeholder="description"></textarea>
 
 		<subtasks></subtasks>
   </div>
