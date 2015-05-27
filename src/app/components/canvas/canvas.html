@@ -7,11 +7,11 @@
 
   <div ng-repeat="(key, post) in posts"
        id={{ post.id }}
-	   class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
+       class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
        ng-style="post.position"
        ng-mousedown="startMove(key, $event)"
        ng-keydown="handleEnter($event, key)">
-	
+
 		<div class="post-colors">
 		   <div class="post-color selected post-{{post.color}}"></div>				<div ng-repeat="color in colors" class="post-color {{ (color !== post.color) ? 'post-' + color : 'empty'}}" ng-click="changeColor(key, color)"></div>
 	</div>
