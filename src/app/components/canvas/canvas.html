@@ -6,15 +6,19 @@
       ng-focus="updateFocus($event)">
 
   <div ng-repeat="(key, post) in posts"
-       class="post"
+       id={{ post.id }}
+       class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
        ng-style="post.position"
        ng-mousedown="startMove(key, $event)"
        ng-keydown="handleEnter($event, key)">
 
-  	<div class="post-buttons">
-  		<i class="fa fa-check-circle"></i>
-  		<i class="fa fa-times" ng-click="removePost(key)"></i>
-  	</div>
+		<div class="post-colors">
+		   <div class="post-color selected post-{{post.color}}"></div>				<div ng-repeat="color in colors" class="post-color {{ (color !== post.color) ? 'post-' + color : 'empty'}}" ng-click="changeColor(key, color)"></div>
+	</div>
+		<div class="post-buttons">
+			<i class="fa fa-check-circle" ng-click="checkPost(key)"></i>
+			<i class="fa fa-times" ng-click="removePost(key)"></i>
+		</div>
 
   		  <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
 
@@ -26,9 +30,9 @@
   		  </div>
 
   		  <ul class="subtasks">
-  			  <li class="subtask" ng-repeat="(stKey, subtask) in post.subtasks">
-  			  <input type="text" name="" id="" ng-model="subtask" />
-  			  <i class="fa fa-check-circle" ng-click="checkSubtask($event, key, stKey)"></i>
+			  <li class="subtask {{subtask.checked ? 'checked' : ''}}" ng-repeat="(stKey, subtask) in post.subtasks track by $index">
+  			  <input type="text" name="" id="" ng-model="subtask.name" />
+  			  <i class="fa fa-check-circle " ng-click="checkSubtask($event, key, stKey)"></i>
   			  <i class="fa fa-times" ng-click="removeSubtask($event, key, stKey)"></i>
   			  </li>
   		  </ul>
