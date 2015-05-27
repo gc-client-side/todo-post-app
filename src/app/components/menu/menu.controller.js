@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('todoPostApp')
+AppControllers
   .controller('MenuCtrl', function ($scope) {
     $scope.sideMenuOn = false;
 
