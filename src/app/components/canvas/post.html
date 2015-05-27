@@ -1,0 +1,13 @@
+  <div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
+       ng-style="post.position"
+       ng-mousedown="startMove(key, $event)"
+       ng-keydown="handleKeydown($event, key)">
+
+		<post-colors></post-colors>
+		<post-buttons></post-buttons>
+
+  		<input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
+  		<textarea name="" id="" cols="33" rows="3" class="post-description" placeholder="description">{{post.description}}</textarea>
+
+		<subtasks></subtasks>
+  </div>

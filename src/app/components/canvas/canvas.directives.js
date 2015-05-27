@@ -1,63 +1,6 @@
 'use strict';
 
 angular.module('todoPostApp')
-//.directive('canvas', function() {
-	//return {
-		//scope: true,
-		//restrict: 'AE',
-		//replace: true,
-		//link: function($scope) {
-
-			  ////get Y dista ce of canvas from top of the window
-			  ////to calculate correct Y-coordinate for new posts
-			  //var top = document.getElementById('canvas').getClientRects()[0].top;
-
-			  //$scope.addPost = function(e) {
-				////add post when clicking on canvas area only
-				////make sure nothings dragging
-				//if (e.target.id === "canvas") {
-					//$scope.posts.push({ title: '',
-										//description: '',
-										//subtasks: [],
-										//color: 'yellow',
-										//position: {
-											//top: e.clientY - top,
-											//left: e.clientX,
-											//'z-index': $scope.posts.length
-										//}
-									//});
-				//}
-			  //};
-
-
-			//// initial drag state
-			//$scope.moveState = { draggable: false  };
-
-
-			//// ng-mousemove
-			//$scope.duringMove = function(e) {
-			  //e.preventDefault();
-
-			  //if ($scope.moveState.draggable) {
-				//var moveState = $scope.moveState,
-				  //post = $scope.posts[moveState.key];
-
-				//post.position.top = moveState.startY + (e.clientY - moveState.clientY);
-				//post.position.left = moveState.startX + (e.clientX - moveState.clientX);
-			  //}
-			//};
-
-			//// ng-mouseup
-			//$scope.endMove = function() {
-			  //$scope.moveState = { draggable: false };
-			//};
-
-
-		//},
-		//templateUrl: 'app/components/canvas/canvas.html'	
-	//}
-//})
-
 .directive('post', ['postdrag', function(postdrag) {
 
 	return {
