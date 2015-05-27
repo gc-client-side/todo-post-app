@@ -5,8 +5,7 @@
       ng-mouseup="endMove()"
       ng-focus="updateFocus($event)">
 
-  <div ng-repeat="(key, post) in posts"
-       id={{ post.id }}
+  <div ng-repeat="(key, post) in posts | filter:query"
        class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
        ng-style="post.position"
        ng-mousedown="startMove(key, $event)"
@@ -37,5 +36,4 @@
   			  </li>
   		  </ul>
   </div>
-
 </main>
