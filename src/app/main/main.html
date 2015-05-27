@@ -1,3 +1,6 @@
-<div ng-include="'app/components/menu/menu.html'"></div>
-
-<div ng-include="'app/components/canvas/canvas.html'"></div>
+<!-- <div ng-include="'app/components/menu/menu.html'"></div> -->
+<app-menu></app-menu>
+<!--<div ng-include="'app/components/canvas/canvas.html'"></div>-->
+<todo-canvas>
+  <todo-post ng-repeat="post in posts | filter:query"></todo-post>
+</todo-canvas>
