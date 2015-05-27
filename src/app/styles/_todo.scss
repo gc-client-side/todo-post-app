@@ -75,7 +75,6 @@ ul {
   /* folded corner for checked posts */
 
   &::before {	  
-	/*$size: 2.5em;*/
 	$size: 1.5em;
 	$color1: #f5f5f5;
 	$color2: black;
@@ -151,8 +150,19 @@ $post-colors: brown $brown,
 			border-bottom-color: darken($color, 10%);
 		}
 
-		&.post-checked .post-buttons > .fa-check-circle,
 		&.post-checked .post-colors {
+			visibility: hidden;		
+		}
+
+		//fade out text colors
+		&.post-checked input, 
+		&.post-checked textarea, 
+		&.post-checked .subtaskInput-container > button {
+			color: $fadedColor;
+		} 
+
+		//hide subtask icons
+		&.post-checked .subtask .fa {
 			visibility: hidden;		
 		}
 

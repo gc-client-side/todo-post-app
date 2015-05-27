@@ -99,7 +99,7 @@ angular.module('todoPostApp')
 	  };
 
 	  $scope.checkPost = function(key) {
-      	$scope.posts[key].checked = true;		 
+      	$scope.posts[key].checked = !$scope.posts[key].checked;		 
 	  }
 
 	  $scope.removeSubtask = function(e, key, stKey) {
