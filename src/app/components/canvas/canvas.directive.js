@@ -38,51 +38,6 @@ angular.module('todoPostApp')
             $scope.posts.splice(key, 1);
           }
         };
-
-        /* move post functions */
-        $scope.movePost = {
-
-          // ng-mousedown
-          startMove: function(key, e) {
-            var posts = $scope.posts,
-                pos = posts[key].position;
-
-            pos['z-index'] = posts.length;
-
-            $scope.moveState = {
-              draggable: true,
-              startX: pos.left,
-              startY: pos.top,
-              clientX: e.clientX,
-              clientY: e.clientY,
-              key: key
-            };
-
-            angular.forEach(posts, function(post, i) {
-              if (i != key && post.position['z-index'])
-                post.position['z-index'] -= 1;
-            });
-          },
-
-          // ng-mousemove
-          duringMove: function(e) {
-            e.preventDefault();
-
-            if ($scope.moveState.draggable) {
-              var moveState = $scope.moveState,
-                post = $scope.posts[moveState.key];
-
-              post.position.top = moveState.startY + (e.clientY - moveState.clientY);
-              post.position.left = moveState.startX + (e.clientX - moveState.clientX);
-            }
-          },
-
-          // ng-mouseup
-          endMove: function() {
-            $scope.moveState = moveInit;
-          }
-        };
-
       } /* End Controller */
     };
   });

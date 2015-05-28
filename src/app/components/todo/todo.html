@@ -1,6 +1,6 @@
 <div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
+     id="{{key}}"
      ng-style="post.position"
-     ng-mousedown="movePost.startMove(key, $event)"
      ng-keydown="handleEnter($event, key)">
 
   <div class="post-colors">

@@ -3,17 +3,18 @@
 angular.module('todoPostApp')
 	.directive('tdpMenu', function() {
 
-		function menuCtrl($scope) {
-			$scope.sideMenuOn = false;
+    function menuLink(scope) {
+      scope.sideMenuOn = false;
 
-    	$scope.toggleSideMenu = function() {
-    		$scope.sideMenuOn ? $scope.sideMenuOn = false : $scope.sideMenuOn = true;
-    	};
-		}
+      scope.toggleSideMenu = function() {
+        scope.sideMenuOn = !scope.sideMenuOn;
+      }
+    }
 
 		return {
 			replace: true,
 			templateUrl: 'app/components/menu/menu.html',
-			controller: menuCtrl
+      link: menuLink
 		};
+
 	});
