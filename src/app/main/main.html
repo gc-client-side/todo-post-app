@@ -1,6 +1,4 @@
-<!-- <div ng-include="'app/components/menu/menu.html'"></div> -->
-<app-menu></app-menu>
-<!--<div ng-include="'app/components/canvas/canvas.html'"></div>-->
-<todo-canvas>
-  <todo-post ng-repeat="post in posts | filter:query"></todo-post>
-</todo-canvas>
+<tdp-menu></tdp-menu>
+<tdp-canvas>
+  <tdp-post ng-repeat="(key,post) in posts | filter:query"></tdp-post>
+</tdp-canvas>

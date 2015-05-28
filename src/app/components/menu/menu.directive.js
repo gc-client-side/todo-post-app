@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('todoPostApp')
-	.directive('appMenu', function() {
+	.directive('tdpMenu', function() {
 
 		function menuCtrl($scope) {
 			$scope.sideMenuOn = false;

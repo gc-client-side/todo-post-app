@@ -1,4 +1,7 @@
-<main id="canvas">
-	<input style="margin:100px" ng-model="query"/>
-	<div ng-transclude></div>
+<main id="canvas"
+      ng-dblclick="addPost($event)"
+      ng-mousemove="movePost.duringMove($event)"
+      ng-mouseup="movePost.endMove()"
+      ng-transclude>
+
 </main>
