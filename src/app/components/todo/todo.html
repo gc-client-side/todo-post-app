@@ -1,7 +1,7 @@
 <div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
      post-id="{{key}}"
      ng-style="post.position"
-     ng-keydown="handleEnter($event, key)">
+     handle-enter>
 
   <div class="post-colors">
     <div class="post-color selected post-{{post.color}}"></div>
@@ -18,9 +18,10 @@
   </div>
 
   <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
-  <textarea cols="33" rows="3" class="post-description" placeholder="description">
-    {{post.description}}
-  </textarea>
+  <textarea cols="33" rows="3"
+            class="post-description"
+            ng-model="post.description"
+            placeholder="description"></textarea>
 
   <subtasks from="post"></subtasks>
 
