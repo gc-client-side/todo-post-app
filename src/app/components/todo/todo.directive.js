@@ -4,51 +4,9 @@ angular.module('todoPostApp')
   .directive('tdpPost', ['$document', function($document) {
 
     function postCtrl($scope) {
-      //post colors
-      $scope.colors = ['brown', 'orange', 'blue', 'light-blue',
-        'green', 'purple', 'yellow'
-      ];
-
-      $scope.changeColor = function(key, color) {
-        $scope.posts[key].color = color;
-      };
 
       $scope.checkPost = function(key) {
         $scope.posts[key].checked = true;
-      };
-
-      $scope.removeSubtask = function(e, key, stKey) {
-
-        $scope.posts[key].subtasks.splice(stKey, 1);
-      };
-
-      $scope.checkSubtask = function(e, key, stKey) {
-        e.target.parentNode.className += " checked";
-      };
-
-      //handles subtasks added by button click
-      $scope.addSubtask = function(e, key) {
-        e.preventDefault();
-
-        var input = e.target.parentNode.firstElementChild,
-          value = input.value.trim();
-
-        if (value !== '') {
-          $scope.posts[key].subtasks.push({
-            checked: false,
-            name: value
-          });
-          input.value = '';
-          input.focus();
-        }
-      };
-
-      //clears subtask field on blur
-      $scope.clearSubtaskInput = function(e) {
-        //slight delay required so that subtask button has an effect
-        setTimeout(function() {
-          e.target.value = '';
-        }, 50);
       };
 
       //handles enter key from any field on the post
@@ -70,7 +28,7 @@ angular.module('todoPostApp')
             } else {
               field.blur();
             }
-          } else if (field.className.search("subtaskInput") > -1) {
+          } /*else if (field.className.search("subtaskInput") > -1) {
             var value = field.value.trim();
 
             //make sure there's a value before adding subtask
@@ -81,7 +39,7 @@ angular.module('todoPostApp')
               });
               field.value = '';
             }
-          }
+          }*/
         }
         //blur on esc key
         else if (e.keyCode === 27) {
@@ -96,4 +54,18 @@ angular.module('todoPostApp')
       templateUrl: 'app/components/todo/todo.html',
       controller: postCtrl
     }
-  }]);
+  }])
+  .directive('chooseColor', function() {
+    return {
+      scope: {
+        post: '='
+      },
+      link: function(scope,element,attr) {
+        element.on('click', function() {
+          scope.post.color = attr.color;
+          scope.$apply();
+        })
+      }
+    }
+  })
+;

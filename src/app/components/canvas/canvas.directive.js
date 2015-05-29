@@ -2,42 +2,50 @@
 
 angular.module('todoPostApp')
   .directive('tdpCanvas', function() {
+
+    function canvasCtrl($scope) {
+      // initialize
+      var top = document.getElementById('canvas').getClientRects()[0].top;
+
+      //post colors
+      var colors = $scope.colors = ['brown', 'orange', 'blue', 'light-blue',
+        'green', 'purple', 'yellow'
+      ];
+
+      $scope.draggable = true;
+
+      $scope.enableDrag = function(e) {
+        $scope.draggable = true;
+      };
+
+      $scope.addPost = function(e) {
+        //add post when clicking on canvas area only
+        if (e.target.id === "canvas") {
+          $scope.posts.push({
+            title: '',
+            description: '',
+            subtasks: [],
+            color: colors[Math.floor(Math.random()*colors.length)],
+            position: {
+              top: e.pageY,
+              left: e.pageX,
+              'z-index': $scope.posts.length
+            }
+          });
+        }
+      };
+
+      $scope.removePost = function(key) {
+        if (confirm("Are you sure? Deletes are permanent!")) {
+          $scope.posts.splice(key, 1);
+        }
+      };
+    }
+
     return {
       replace: true,
       transclude: true,
-      templateUrl: 'app/components/canvas/canvas.html',
-
-      controller: function canvasCtrl($scope) {
-
-        // initialize
-        var top = document.getElementById('canvas').getClientRects()[0].top,
-            moveInit = { draggable: false};
-
-        $scope.moveState = moveInit;
-
-        $scope.addPost = function(e) {
-          //add post when clicking on canvas area only
-          //make sure nothings dragging
-          if (e.target.id === "canvas") {
-            $scope.posts.push({
-              title: '',
-              description: '',
-              subtasks: [],
-              color: 'yellow',
-              position: {
-                top: e.clientY - top,
-                left: e.clientX,
-                'z-index': $scope.posts.length
-              }
-            });
-          }
-        };
-
-        $scope.removePost = function(key) {
-          if (confirm("Are you sure? Deletes are permanent!")) {
-            $scope.posts.splice(key, 1);
-          }
-        };
-      } /* End Controller */
+      template: '<main id="canvas" ng-click="enableDrag()" ng-dblclick="addPost($event)"></main>',
+      controller: canvasCtrl
     };
   });

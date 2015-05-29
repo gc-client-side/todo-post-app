@@ -1,14 +1,15 @@
 <div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
-     id="{{key}}"
+     post-id="{{key}}"
      ng-style="post.position"
      ng-keydown="handleEnter($event, key)">
 
   <div class="post-colors">
     <div class="post-color selected post-{{post.color}}"></div>
-    <div ng-repeat="color in colors"
-         class="post-color {{ (color !== post.color) ? 'post-' + color : 'empty'}}"
-         ng-click="changeColor(key, color)">
-    </div>
+    <choose-color ng-repeat="color in colors"
+         color="{{color}}"
+         post="post"
+         class="post-color {{ (color !== post.color) ? 'post-' + color : 'empty'}}">
+    </choose-color>
   </div>
 
   <div class="post-buttons">
@@ -20,19 +21,7 @@
   <textarea cols="33" rows="3" class="post-description" placeholder="description">
     {{post.description}}
   </textarea>
-  <div class="subtaskInput-container">
-    <input class="subtaskInput" type="text" placeholder="subtask"
-           ng-blur="clearSubtaskInput($event)" />
-    <button ng-click="addSubtask($event, key)">+</button>
-  </div>
 
-  <ul class="subtasks">
-    <li class="subtask {{subtask.checked ? 'checked' : ''}}"
-        ng-repeat="(stKey, subtask) in post.subtasks track by $index">
-      <input type="text" ng-model="subtask.name" />
-      <i class="fa fa-check-circle " ng-click="checkSubtask($event, key, stKey)"></i>
-      <i class="fa fa-times" ng-click="removeSubtask($event, key, stKey)"></i>
-    </li>
-  </ul>
+  <subtasks from="post"></subtasks>
 
 </div>
