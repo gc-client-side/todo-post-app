@@ -20,7 +20,7 @@ $side-menu-max-width: em(400);
   color: $light;
   position: fixed;
   top: 0;
-  right: 0;
+  right: -$side-menu-max-width;
   height: 100%;
   width: 27%;
   min-width: $side-menu-min-width;
@@ -34,7 +34,8 @@ $side-menu-max-width: em(400);
   transition: transform 0.2s;
 
   &.ng-hide {
-    transform: translateX($side-menu-max-width);
+    display: block!important;
+    transform: translateX(-$side-menu-max-width);
   }
 
   .app-name {

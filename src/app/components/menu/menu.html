@@ -1,10 +1,10 @@
-<header class="menu-container" ng-controller="MenuCtrl">
+<header class="menu-container">
 
   <!-- Top Menu -->
   <nav class="top-menu" role="navigation">
     <a class="app-name" href="/">TodoPostIt</a>
     <div class="search-posts">
-      <input type="search" />
+      <input ng-model="query" />
     </div>
     <ul class="filter-posts">
       <li class="active">All</li>
@@ -16,7 +16,7 @@
   </nav>
 
   <!-- Side Menu -->
-  <nav class="side-menu" role="navigation" ng-show="sideMenuOn">
+  <nav class="side-menu" role="navigation" ng-hide="sideMenuOn">
     <a href="/" class="app-name">TodoPostIt</a>
     <ul class="user-actions">
       <li><a href="javascript:void(0)">Sign Up</a></li>

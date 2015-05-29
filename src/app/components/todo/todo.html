@@ -1,0 +1,28 @@
+<div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
+     post-id="{{key}}"
+     ng-style="post.position"
+     handle-enter>
+
+  <div class="post-colors">
+    <div class="post-color selected post-{{post.color}}"></div>
+    <choose-color ng-repeat="color in colors"
+         color="{{color}}"
+         post="post"
+         class="post-color {{ (color !== post.color) ? 'post-' + color : 'empty'}}">
+    </choose-color>
+  </div>
+
+  <div class="post-buttons">
+    <i class="fa fa-check-circle" ng-click="checkPost(key)"></i>
+    <i class="fa fa-times" ng-click="removePost(key)"></i>
+  </div>
+
+  <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
+  <textarea cols="33" rows="3"
+            class="post-description"
+            ng-model="post.description"
+            placeholder="description"></textarea>
+
+  <subtasks from="post"></subtasks>
+
+</div>

@@ -1,3 +1,4 @@
-<div ng-include="'app/components/menu/menu.html'"></div>
-<!--<canvas></canvas>-->
-<div ng-include="'app/components/canvas/canvas.html'"></div>
+<tdp-menu></tdp-menu>
+<tdp-canvas ng-transclude>
+  <tdp-post draggable ng-repeat="(key,post) in posts | filter:query"></tdp-post>
+</tdp-canvas>

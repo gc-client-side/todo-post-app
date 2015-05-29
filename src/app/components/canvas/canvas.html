@@ -1,9 +1,1 @@
-<main id="canvas"
-      ng-controller="CanvasCtrl"
-      ng-dblclick="addPost($event)"
-      ng-mousemove="duringMove($event)"
-      ng-mouseup="endMove()">
-
-	  <post ng-repeat="(key, post) in posts | filter:query"></post>
-
-</main>
+<main id="canvas" ng-dblclick="addPost($event)"></main>
