@@ -4,16 +4,29 @@ angular.module('todoPostApp')
   .directive('tdpPost', function() {
 
     function postCtrl($scope) {
-
+	  
       $scope.checkPost = function(key) {
-        $scope.posts[key].checked = true;
+        $scope.posts[key].checked = !$scope.posts[key].checked ;
       };
+
     } /* end controller */
+
+	function postLink(scope, element, attrs) {
+		var id = scope.key;
+
+	  //watch for individual post updates
+	  scope.$watch('post', function() {
+		  if (!scope.dragging && !scope.typing) {
+		  	scope.$emit('update', id);
+		  }
+	  }, true);
+	}
 
     return {
       replace: true,
       templateUrl: 'app/components/todo/todo.html',
-      controller: postCtrl
+      controller: postCtrl,
+	  link: postLink
     }
   })
   .directive('chooseColor', function() {
@@ -29,10 +42,15 @@ angular.module('todoPostApp')
       }
     }
   })
-  .directive('handleEnter', function() {
+  .directive('handleKeys', function($timeout) {
     return {
       link: function(scope, element) {
+		//key state for firing updates 
+		scope.typing = false;
+
         element.on('keydown', function(e) {
+		  scope.typing = true;
+
           if (e.keyCode === 13) {
 
             var field = e.target,
@@ -58,6 +76,14 @@ angular.module('todoPostApp')
             active.blur();
           }
         });
+
+		element.on('keyup', function(e) {
+			$timeout(function() {
+				scope.typing = true;
+				//update post
+				scope.$emit('update', scope.key);
+			}, 500);	
+		});
       }
     }
   })

@@ -1,7 +1,8 @@
 <div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
-     post-id="{{key}}"
+	post-id="{{key}}"
      ng-style="post.position"
-     handle-enter>
+	 post="post"
+     handle-keys>
 
   <div class="post-colors">
     <div class="post-color selected post-{{post.color}}"></div>
@@ -23,6 +24,6 @@
             ng-model="post.description"
             placeholder="description"></textarea>
 
-  <subtasks from="post"></subtasks>
+  <subtasks post="post" key="key"></subtasks>
 
 </div>

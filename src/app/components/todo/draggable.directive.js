@@ -4,7 +4,7 @@ angular.module('todoPostApp')
   .directive('draggable', ['$document', function($document) {
 
     function draggable(scope, element, attrs) {
-      var id = parseInt(attrs.postId, 10),
+	  var id = parseInt(attrs.postId, 10),
         posts = scope.posts,
         pos = posts[id].position,
         moved = false,
@@ -13,6 +13,9 @@ angular.module('todoPostApp')
         postX = pos.left,
         postY = pos.top;
 
+  	  //drag state checked for lower level post updates
+	  scope.dragging = false;
+
       scope.$watch('draggable', function() {
         scope.draggable = true;
       });
@@ -20,6 +23,7 @@ angular.module('todoPostApp')
       element.on('click', function(e) {
         e.stopPropagation();
         if (!moved) {
+		  scope.dragging = true;
           scope.draggable = false;
         }
       });
@@ -27,19 +31,27 @@ angular.module('todoPostApp')
       element.on('mousedown', function(e) {
         startX= e.pageX - postX;
         startY= e.pageY - postY;
-
-        pos['z-index'] = posts.length;
+	
+		//***direct array access required for firebase arrays
+		//can't cache nested arrays
+		posts[id].position['z-index'] = posts.length;
 
         if (scope.draggable) {
           $document.on('mousemove', mousemove);
           $document.on('mouseup', mouseup);
         }
 
-        angular.forEach(posts, function(post, i) {
-          if (i !== id && post.position['z-index'])
-            post.position['z-index'] -= 1;
-        });
-        scope.$apply();
+		//update z-indices
+		scope.$apply(function() {
+			angular.forEach(posts, function(post, i) {
+				var z = post.position['z-index']; 
+				if (z > 0) {
+					post.position['z-index'] -= 1;
+				}
+			})
+
+		})
+
       });
 
       function mousemove(e) {
@@ -56,11 +68,25 @@ angular.module('todoPostApp')
       function mouseup() {
         if (pos.left !== postX && pos.top !== postY) {
           moved = true;
-          pos.left = postX;
-          pos.top = postY;
-        } else moved = false;
+
+		  scope.$apply(function() {
+			  posts[id].position.left = postX;
+			  posts[id].position.top = postY;
+		  });
+
+		  //revert drag state
+		  scope.dragging = false;
+
+		  //update all posts
+		  scope.$emit('updateAll');
+
+		} else {
+			moved = false;
+		} 
+
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
+
       }
     }
 

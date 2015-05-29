@@ -21,7 +21,7 @@ angular.module('todoPostApp')
       $scope.addPost = function(e) {
         //add post when clicking on canvas area only
         if (e.target.id === "canvas") {
-          $scope.posts.push({
+          $scope.posts.$add({
             title: '',
             description: '',
             subtasks: [],
@@ -37,7 +37,7 @@ angular.module('todoPostApp')
 
       $scope.removePost = function(key) {
         if (confirm("Are you sure? Deletes are permanent!")) {
-          $scope.posts.splice(key, 1);
+          $scope.posts.$remove(key);
         }
       };
     }
