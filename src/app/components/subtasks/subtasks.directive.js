@@ -17,10 +17,10 @@ function subtasks() {
   };
 }
 
-SubtaskCtrl.$inject = ['$scope', '$firebaseArray'];
+SubtaskCtrl.$inject = ['$scope', '$firebaseArray', '$timeout'];
 
-function SubtaskCtrl($scope, $firebaseArray) {
-  //console.log($scope.taskId);
+function SubtaskCtrl($scope, $firebaseArray, $timeout) {
+  var ajaxPromise = null;
   $scope.subtasks = [];
 
   // need to watch id, due to new post id updated with promise
@@ -31,9 +31,12 @@ function SubtaskCtrl($scope, $firebaseArray) {
     }
   });
 
+
+
   // Add, Check, Remove functions
   $scope.addSubtask = addSubtask;
   $scope.checkSubtask = checkSubtask;
+  $scope.saveSubtask = saveSubtask;
   $scope.removeSubtask = removeSubtask;
 
   function addSubtask(e) {
@@ -56,6 +59,17 @@ function SubtaskCtrl($scope, $firebaseArray) {
     var subtasks = $scope.subtasks;
     subtasks[key].checked = !subtasks[key].checked;
     subtasks.$save(key);
+  }
+
+  function saveSubtask(key) {
+    if (ajaxPromise)
+      $timeout.cancel(ajaxPromise);
+
+    ajaxPromise = $timeout(save, 500);
+
+    function save() {
+      $scope.subtasks.$save(key);
+    }
   }
 
   function removeSubtask(key) {

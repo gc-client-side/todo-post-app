@@ -6,7 +6,7 @@
 <ul class="subtasks">
   <li ng-repeat="(key,subtask) in subtasks"
       class="subtask {{subtask.checked ? 'checked' : ''}}">
-    <input type="text" ng-model="subtask.name" />
+    <input type="text" ng-model="subtask.name" ng-keyup="saveSubtask(key)"/>
     <i class="fa fa-check-circle" ng-click="checkSubtask(key)"></i>
     <i class="fa fa-times" ng-click="removeSubtask(key)"></i>
   </li>
