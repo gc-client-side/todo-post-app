@@ -26,7 +26,8 @@ function SubtaskCtrl($scope, $firebaseArray) {
   // need to watch id, due to new post id updated with promise
   $scope.$watch('taskId', function() {
     if ($scope.taskId) {
-      $scope.subtasks = $firebaseArray($scope.taskList.child($scope.taskId));
+      var subtasksRef = $scope.taskList.$ref().child($scope.taskId);
+      $scope.subtasks = $firebaseArray(subtasksRef);
     }
   });
 
@@ -37,9 +38,9 @@ function SubtaskCtrl($scope, $firebaseArray) {
 
   function addSubtask(e) {
     if (e.keyCode === 13 || e.type === 'click') {
-      var value = $scope.newTask.trim();
-
-      if (value) {
+      var value = $scope.newTask;
+      // make sure value is not undefined first before trim()
+      if (value && value.trim()) {
         $scope.subtasks.$add({
           name: value,
           checked: false
