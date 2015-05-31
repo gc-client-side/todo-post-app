@@ -24,13 +24,17 @@ function MainCtrl($scope, $firebaseArray, FBURL) {
     $scope.posts.$save(key);
   });
 
-  //update all posts
-  $scope.$on('updateAll', function() {
+  //update all postsd
+  /*$scope.$on('updateAll', function() {
     var	posts = $scope.posts;
 
     angular.forEach(posts, function(post) {
       posts.$save(post);
     });
-  })
+  })*/
+
+  $scope.posts.$watch(function(e) {
+    console.log(e);
+  });
 
 }

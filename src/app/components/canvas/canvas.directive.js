@@ -3,7 +3,7 @@
 angular.module('todoPostApp')
   .directive('tdpCanvas', function() {
 
-    function CanvasCtrl($scope) {
+    function CanvasCtrl($scope, $timeout, $firebaseArray) {
       // initialize
       //var top = document.getElementById('canvas').getClientRects()[0].top;
 
@@ -22,13 +22,13 @@ angular.module('todoPostApp')
         //add post when clicking on canvas area only
         if (e.target.id === "canvas") {
           var promise = $scope.posts.$add({
-            title: '',
-            description: '',
+            //title: '',
+            //description: '',
             color: colors[Math.floor(Math.random()*colors.length)],
             position: {
               top: e.pageY,
               left: e.pageX,
-              'z-index': $scope.posts.length
+              'z-index': $scope.posts.length+1
             }
           });
           promise.then(function(ref) {
@@ -42,8 +42,10 @@ angular.module('todoPostApp')
       $scope.removePost = function(key) {
         if (confirm("Are you sure? Deletes are permanent!")) {
           $scope.posts.$remove(key).then(function(ref) {
+            // remove related subtasks
             var taskList = $scope.taskList;
             taskList.$remove(taskList.$indexFor(ref.key()));
+            $scope.posts = $firebaseArray(ref.parent());
           });
         }
       };

@@ -1,97 +1,79 @@
 'use strict';
 
 angular.module('todoPostApp')
-  .directive('draggable', ['$document', function($document) {
+  .directive('draggable', draggable);
 
-    function draggable(scope, element, attrs) {
-	  var id = parseInt(attrs.postId, 10),
-        posts = scope.posts,
-        pos = posts[id].position,
-        moved = false,
+draggable.$inject = ['$document'];
+
+function draggable($document) {
+  return {
+    scope: {
+      onMoved: '&',
+      onFocus: '&',
+      post: '=',
+      length: '='
+    },
+    link: link,
+    controller: DraggableCtrl
+  };
+
+  function link(scope, element, attrs) {
+    // init variables
+    var post = scope.post,
+        pos = post.position,
         startX,
         startY,
         postX = pos.left,
         postY = pos.top;
+    /**
+     * init callback expression
+     *
+     * how to pass in argument to expression:
+     * http://stackoverflow.com/questions/17556703/angularjs-directive-call-function-specified-in-attribute-and-pass-an-argument-to
+     */
+    var updatePos = scope.onMoved(),
+        updateIndices = scope.onFocus();
 
-  	  //drag state checked for lower level post updates
-	  scope.dragging = false;
+    element.on('mousedown', function(e) {
+      startX = e.pageX - postX;
+      startY = e.pageY - postY;
 
-      scope.$watch('draggable', function() {
-        scope.draggable = true;
-      });
-
-      element.on('click', function(e) {
-        e.stopPropagation();
-        if (!moved) {
-		  scope.dragging = true;
-          scope.draggable = false;
-        }
-      });
-
-      element.on('mousedown', function(e) {
-        startX= e.pageX - postX;
-        startY= e.pageY - postY;
-	
-		//***direct array access required for firebase arrays
-		//can't cache nested arrays
-		posts[id].position['z-index'] = posts.length;
-
-        if (scope.draggable) {
-          $document.on('mousemove', mousemove);
-          $document.on('mouseup', mouseup);
-        }
-
-		//update z-indices
-		scope.$apply(function() {
-			angular.forEach(posts, function(post, i) {
-				var z = post.position['z-index']; 
-				if (z > 0) {
-					post.position['z-index'] -= 1;
-				}
-			})
-
-		})
-
-      });
-
-      function mousemove(e) {
-        e.preventDefault();
-
-        postX = e.pageX - startX;
-        postY = e.pageY - startY;
-        element.css({
-          top: postY + 'px',
-          left: postX + 'px'
-        });
+      var oldIndex = scope.post.position['z-index'];
+      // if moving same post, do nothing with index
+      if (oldIndex !== scope.length) {
+        // due to ajax delay, use css to set on top first
+        element.css({'z-index': scope.length+1});
+        post.position['z-index'] = scope.length; // refact
+        updateIndices(oldIndex);
       }
 
-      function mouseup() {
-        if (pos.left !== postX && pos.top !== postY) {
-          moved = true;
+      $document.on('mousemove', mousemove);
+      $document.on('mouseup', mouseup);
+    });
 
-		  scope.$apply(function() {
-			  posts[id].position.left = postX;
-			  posts[id].position.top = postY;
-		  });
+    function mousemove(e) {
+      e.preventDefault();
 
-		  //revert drag state
-		  scope.dragging = false;
-
-		  //update all posts
-		  scope.$emit('updateAll');
-
-		} else {
-			moved = false;
-		} 
-
-        $document.off('mousemove', mousemove);
-        $document.off('mouseup', mouseup);
-
-      }
+      postX = e.pageX - startX;
+      postY = e.pageY - startY;
+      element.css({
+        top: postY + 'px',
+        left: postX + 'px'
+      });
     }
 
-    return {
-      link: draggable
+    function mouseup() {
+      $document.off('mousemove', mousemove);
+      $document.off('mouseup', mouseup);
+
+      if (post.position.left !== postX && post.position.top !== postY) // if moved
+        updatePos(postX, postY);
     }
 
-  }]);
+  }
+}
+
+
+function DraggableCtrl($scope) {
+  $scope.click = 232;
+}

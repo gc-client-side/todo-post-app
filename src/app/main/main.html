@@ -1,4 +1,8 @@
 <tdp-menu></tdp-menu>
 <tdp-canvas ng-transclude>
-  <tdp-post draggable ng-repeat="(key,post) in posts | filter:query"></tdp-post>
+  <tdp-post draggable
+            on-moved="updatePos"
+            on-focus="updateIndices"
+            length="posts.length"
+            ng-repeat="(key,post) in posts | filter:query"></tdp-post>
 </tdp-canvas>
