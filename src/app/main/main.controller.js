@@ -16,7 +16,7 @@ function MainCtrl($scope, $firebaseArray, FBURL) {
 
   //assign data to DOM
   $scope.posts = $firebaseArray(postRef);
-  $scope.taskList = tasklistRef;
+  $scope.taskList = $firebaseArray(tasklistRef);
 
   /* listen to data updates emitted by lower level scopes */
   //update individual  post

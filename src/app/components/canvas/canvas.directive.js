@@ -41,7 +41,12 @@ angular.module('todoPostApp')
 
       $scope.removePost = function(key) {
         if (confirm("Are you sure? Deletes are permanent!")) {
-          $scope.posts.$remove(key);
+          $scope.posts.$remove(key).then(function(ref) {
+            var taskList = $scope.taskList;
+            taskList.$remove(taskList.$indexFor(ref.key())).then(function() {
+             console.log('removed');
+           });
+          });
         }
       };
     }
