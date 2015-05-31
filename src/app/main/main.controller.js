@@ -1,28 +1,36 @@
 'use strict';
 
-angular.module('todoPostApp')
-  .controller('MainCtrl', ['$scope', '$http', '$firebaseArray', function ($scope, $http, $firebaseArray) {
+angular
+  .module('todoPostApp')
+  .controller('MainCtrl', MainCtrl);
 
-	//connect to Firebase
-	var ref = new Firebase('https://postodo.firebaseio.com');
-	var obj = $firebaseArray(ref);
+MainCtrl.$inject = ['$scope', '$firebaseArray', 'FBURL'];
 
-	//assign data to DOM
-	$scope.posts = obj;
 
-	console.log($scope.posts);
+/* @ngInject */
+function MainCtrl($scope, $firebaseArray, FBURL) {
 
-	/* listen to data updates emitted by lower level scopes */
-	//update individual  post
-	$scope.$on('update', function(e, key) {
-		$scope.posts.$save(key);
-	})
-	//update all posts
-	$scope.$on('updateAll', function() {
-	    var	posts = $scope.posts;
+  var ref = new Firebase(FBURL),
+      postRef = ref.child('posts'),
+      tasklistRef = ref.child('tasklist');
 
-		angular.forEach(posts, function(post) {
-			posts.$save(post);	
-		});
-	})
-  }]);
+  //assign data to DOM
+  $scope.posts = $firebaseArray(postRef);
+  $scope.taskList = tasklistRef;
+
+  /* listen to data updates emitted by lower level scopes */
+  //update individual  post
+  $scope.$on('update', function(e, key) {
+    $scope.posts.$save(key);
+  });
+
+  //update all posts
+  $scope.$on('updateAll', function() {
+    var	posts = $scope.posts;
+
+    angular.forEach(posts, function(post) {
+      posts.$save(post);
+    });
+  })
+
+}

@@ -3,9 +3,9 @@
 angular.module('todoPostApp')
   .directive('tdpCanvas', function() {
 
-    function canvasCtrl($scope) {
+    function CanvasCtrl($scope) {
       // initialize
-      var top = document.getElementById('canvas').getClientRects()[0].top;
+      //var top = document.getElementById('canvas').getClientRects()[0].top;
 
       //post colors
       var colors = $scope.colors = ['brown', 'orange', 'blue', 'light-blue',
@@ -21,16 +21,20 @@ angular.module('todoPostApp')
       $scope.addPost = function(e) {
         //add post when clicking on canvas area only
         if (e.target.id === "canvas") {
-          $scope.posts.$add({
+          var promise = $scope.posts.$add({
             title: '',
             description: '',
-            subtasks: [],
             color: colors[Math.floor(Math.random()*colors.length)],
             position: {
               top: e.pageY,
               left: e.pageX,
               'z-index': $scope.posts.length
             }
+          });
+          promise.then(function(ref) {
+            ref.update({
+              taskId: ref.key()
+            });
           });
         }
       };
@@ -46,6 +50,6 @@ angular.module('todoPostApp')
       replace: true,
       transclude: true,
       template: '<main id="canvas" ng-click="enableDrag()" ng-dblclick="addPost($event)"></main>',
-      controller: canvasCtrl
+      controller: CanvasCtrl
     };
   });
