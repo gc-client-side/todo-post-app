@@ -1,12 +1,12 @@
-<div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
-     ng-style="post.position">
+<div class="post {{'post-' + td.post.color}} {{td.post.checked ? 'post-checked' : ''}}"
+     ng-style="td.post.position">
 
   <div class="post-colors">
-    <div class="post-color selected post-{{post.color}}"></div>
+    <div class="post-color selected post-{{td.post.color}}"></div>
     <choose-color ng-repeat="color in colors"
          color="{{color}}"
          post="post"
-         class="post-color {{ (color !== post.color) ? 'post-' + color : 'empty'}}">
+         class="post-color {{ (color !== td.post.color) ? 'post-' + color : 'empty'}}">
     </choose-color>
   </div>
 
@@ -16,13 +16,13 @@
   </div>
 
   <input type="text" class="post-title" placeholder="Title"
-         ng-model="post.title" ng-change="savePost(key)"/>
+         ng-model="td.post.title" ng-change="savePost(key)"/>
   <textarea cols="33" rows="3"
             class="post-description"
-            ng-model="post.description"
+            ng-model="td.post.description"
             ng-change="savePost(key)"
             placeholder="description"></textarea>
 
-  <subtasks task-list="taskList" task-id="post.taskId" ></subtasks>
+  <subtasks task-list="taskList" task-id="td.post.taskId" ></subtasks>
 
 </div>

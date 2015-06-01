@@ -13,50 +13,53 @@ function subtasks() {
       taskList: '='
     },
     templateUrl: 'app/components/subtasks/subtasks.html',
-    controller: SubtaskCtrl
+    controller: SubtaskCtrl,
+    controllerAs: 'task',
+    bindToController: true
   };
 }
 
 SubtaskCtrl.$inject = ['$scope', '$firebaseArray', '$timeout'];
 
 function SubtaskCtrl($scope, $firebaseArray, $timeout) {
+  var vm = this;
   var ajaxPromise = null;
-  $scope.subtasks = [];
+  vm.subtasks = [];
 
   // need to watch id, due to new post id updated with promise @addPost()
   $scope.$watch('taskId', function() {
     if ($scope.taskId) {
-      var subtasksRef = $scope.taskList.$ref().child($scope.taskId);
-      $scope.subtasks = $firebaseArray(subtasksRef);
+      var subtasksRef = main.taskList.$ref().child($scope.taskId);
+      vm.subtasks = $firebaseArray(subtasksRef);
     }
   });
 
 
 
   // Add, Check, Remove functions
-  $scope.addSubtask = addSubtask;
-  $scope.checkSubtask = checkSubtask;
-  $scope.saveSubtask = saveSubtask;
-  $scope.removeSubtask = removeSubtask;
+  vm.addSubtask = addSubtask;
+  vm.checkSubtask = checkSubtask;
+  vm.saveSubtask = saveSubtask;
+  vm.removeSubtask = removeSubtask;
 
   function addSubtask(e) {
     if (e.keyCode === 13 || e.type === 'click') {
-      var value = $scope.newTask;
+      var value = vm.newTask;
       // make sure value is not undefined first before trim()
       if (value && value.trim()) {
-        $scope.subtasks.$add({
+        vm.subtasks.$add({
           name: value,
           checked: false
         })
       }
-      $scope.newTask = '';
+      vm.newTask = '';
       /*if (e.keyCode === 'undefined')
         e.target.parentNode.firstElementChild.focus();*/
     }
   }
 
   function checkSubtask(key) {
-    var subtasks = $scope.subtasks;
+    var subtasks = vm.subtasks;
     subtasks[key].checked = !subtasks[key].checked;
     subtasks.$save(key);
   }
@@ -68,12 +71,12 @@ function SubtaskCtrl($scope, $firebaseArray, $timeout) {
     ajaxPromise = $timeout(save, 500);
 
     function save() {
-      $scope.subtasks.$save(key);
+      vm.subtasks.$save(key);
     }
   }
 
   function removeSubtask(key) {
-    $scope.subtasks.$remove(key);
+    vm.subtasks.$remove(key);
   }
 
 }

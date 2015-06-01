@@ -22,8 +22,7 @@ configure.$inject = ['$routeProvider'];
 function configure($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'app/main/main.html',
-      controller: 'MainCtrl'
+      templateUrl: 'app/main/main.html'
     })
     .otherwise({
       redirectTo: '/'

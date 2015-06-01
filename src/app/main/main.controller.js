@@ -9,19 +9,21 @@ MainCtrl.$inject = ['$scope', '$firebaseArray', 'FBURL'];
 
 /* @ngInject */
 function MainCtrl($scope, $firebaseArray, FBURL) {
+  var vm = this;
 
   var ref = new Firebase(FBURL),
       postRef = ref.child('posts'),
       tasklistRef = ref.child('tasklist');
 
   //assign data to DOM
-  $scope.posts = $firebaseArray(postRef);
-  $scope.taskList = $firebaseArray(tasklistRef);
+  vm.posts = $firebaseArray(postRef);
+  vm.taskList = $firebaseArray(tasklistRef);
+  vm.scopeTest = 'success';
 
   /* listen to data updates emitted by lower level scopes */
   //update individual  post
   $scope.$on('update', function(e, key) {
-    $scope.posts.$save(key);
+    vm.posts.$save(key);
   });
 
   //update all postsd

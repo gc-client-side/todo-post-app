@@ -4,7 +4,7 @@
 </div>
 
 <ul class="subtasks">
-  <li ng-repeat="(key,subtask) in subtasks"
+  <li ng-repeat="(key,subtask) in task.subtasks"
       class="subtask {{subtask.checked ? 'checked' : ''}}">
     <input type="text" ng-model="subtask.name" ng-change="saveSubtask(key)"/>
     <!-- maybe ng-change? -->
