@@ -1,17 +1,18 @@
 'use strict';
 
 angular.module('todoPostApp')
-  .directive('draggable', draggable);
+  .directive('tdpDrag', tdpDrag);
 
-draggable.$inject = ['$document'];
+tdpDrag.$inject = ['$document'];
 
-function draggable($document) {
+function tdpDrag($document) {
   return {
     scope: {
       onMoved: '&',
       onFocus: '&',
       post: '=',
-      length: '='
+      length: '=',
+      draggable: '='
     },
     link: link
   };
@@ -34,10 +35,15 @@ function draggable($document) {
         updateIndices = scope.onFocus();
 
     element.on('mousedown', function(e) {
+      if (scope.draggable)
+        mousedown(e);
+    });
+
+    function mousedown(e) {
       startX = e.pageX - postX;
       startY = e.pageY - postY;
 
-      var oldIndex = scope.post.position['z-index'];
+      var oldIndex = post.position['z-index'];
       // if moving same post, do nothing with index
       if (oldIndex !== scope.length) {
         // due to ajax delay, use css to set on top first
@@ -48,7 +54,7 @@ function draggable($document) {
 
       $document.on('mousemove', mousemove);
       $document.on('mouseup', mouseup);
-    });
+    }
 
     function mousemove(e) {
       e.preventDefault();
@@ -64,9 +70,12 @@ function draggable($document) {
     function mouseup() {
       $document.off('mousemove', mousemove);
       $document.off('mouseup', mouseup);
-
-      if (post.position.left !== postX && post.position.top !== postY) // if moved
+      // if moved
+      if (post.position.left !== postX && post.position.top !== postY) {
         updatePos(postX, postY);
+      } else {
+        scope.$emit('dragStatus', false);
+      }
     }
-  }
+  } /* end link */
 }

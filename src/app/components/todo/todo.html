@@ -1,7 +1,5 @@
 <div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
-     ng-style="post.position"
-	 post="post"
-     >
+     ng-style="post.position">
 
   <div class="post-colors">
     <div class="post-color selected post-{{post.color}}"></div>
@@ -18,11 +16,11 @@
   </div>
 
   <input type="text" class="post-title" placeholder="Title"
-         ng-model="post.title" ng-keyup="savePost(key)"/>
+         ng-model="post.title" ng-change="savePost(key)"/>
   <textarea cols="33" rows="3"
             class="post-description"
             ng-model="post.description"
-            ng-keyup="savePost(key)"
+            ng-change="savePost(key)"
             placeholder="description"></textarea>
 
   <subtasks task-list="taskList" task-id="post.taskId" ></subtasks>

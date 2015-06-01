@@ -23,7 +23,7 @@ function SubtaskCtrl($scope, $firebaseArray, $timeout) {
   var ajaxPromise = null;
   $scope.subtasks = [];
 
-  // need to watch id, due to new post id updated with promise
+  // need to watch id, due to new post id updated with promise @addPost()
   $scope.$watch('taskId', function() {
     if ($scope.taskId) {
       var subtasksRef = $scope.taskList.$ref().child($scope.taskId);

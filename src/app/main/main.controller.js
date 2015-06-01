@@ -33,8 +33,8 @@ function MainCtrl($scope, $firebaseArray, FBURL) {
     });
   })*/
 
-  $scope.posts.$watch(function(e) {
+  /*$scope.posts.$watch(function(e) {
     console.log(e);
-  });
+  });*/
 
 }

@@ -7,10 +7,12 @@ function tdpCanvas() {
   return {
     replace: true,
     transclude: true,
-    template: '<main id="canvas" ng-click="enableDrag()" ng-dblclick="addPost($event)"></main>',
+    template: '<main id="canvas" ng-click="enableDrag($event)" ng-dblclick="addPost($event)"></main>',
     controller: CanvasCtrl
   };
 }
+
+CanvasCtrl.$inject = ['$scope', '$firebaseArray'];
 
 function CanvasCtrl($scope, $firebaseArray) {
   // initialize
@@ -25,9 +27,15 @@ function CanvasCtrl($scope, $firebaseArray) {
   $scope.enableDrag = enableDrag;
   $scope.addPost = addPost;
   $scope.removePost = removePost;
+  $scope.$on('dragStatus', disableDrag);
 
-  function enableDrag() {
-    $scope.draggable = true;
+  function enableDrag(e) {
+    if (e.target.id === "canvas")
+      $scope.draggable = true;
+  }
+
+  function disableDrag(e, status) {
+    $scope.draggable = status;
   }
 
   function addPost(e) {

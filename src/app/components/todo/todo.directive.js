@@ -7,14 +7,14 @@ function tdpPost() {
   return {
     replace: true,
     templateUrl: 'app/components/todo/todo.html',
-    controller: TodoCtrl,
+    controller: TodoPostCtrl,
     link: link
   };
 
   function link(scope, element, attrs) {
     var id = scope.key;
 
-    //watch for individual post updates
+    //watch for individual post (position) updates
     scope.$watch('post.position', function() {
       scope.$emit('update', id);
     }, true);
@@ -22,7 +22,7 @@ function tdpPost() {
 }
 
 
-function TodoCtrl($scope, $timeout) {
+function TodoPostCtrl($scope, $timeout) {
   var postPromise = null;
   var post = $scope.post;
 
@@ -30,6 +30,7 @@ function TodoCtrl($scope, $timeout) {
   $scope.savePost = savePost;
   $scope.updatePos = updatePos;
   $scope.updateIndices = updateIndices;
+
 
   function checkPost(key) {
     post.checked = !post.checked ;
