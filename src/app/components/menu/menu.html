@@ -6,28 +6,38 @@
     <div class="search-posts">
       <input ng-model="query" />
     </div>
-    <ul class="filter-posts">
-      <li class="active">All</li>
-      <li>Active</li>
-      <li>Completed</li>
-      <li class="clear-posts">Clear Completed</li>
+	<ul ng-controller="tdpFilterCtrl as ctrl"
+		class="filter-posts" 
+		ng-click="ctrl.toggleActive($event); ctrl.filterPosts($event)">
+      <li class="active" ng-click="ctrl.filterAll()">All</li>
+      <li ng-click="ctrl.filterActive()">Active</li>
+      <li ng-click="ctrl.filterCompleted()">Completed</li>
+      <li class="clear-posts" ng-click="ctrl.clearCompleted()">Clear Completed</li>
     </ul>
-    <a ng-click="toggleSideMenu()" class="side-menu-btn unselectable">Menu</a>
+    <a ng-click="tdpMenu.toggleSideMenu()" class="side-menu-btn unselectable">Menu</a>
   </nav>
 
   <!-- Side Menu -->
-  <nav class="side-menu" role="navigation" ng-hide="sideMenuOn">
+  <nav class="side-menu" role="navigation" ng-hide="tdpMenu.sideMenuOn">
     <a href="/" class="app-name">TodoPostIt</a>
     <ul class="user-actions">
       <li><a href="javascript:void(0)">Sign Up</a></li>
       <li><a href="javascript:void(0)">Log In</a></li>
       <li><a href="javascript:void(0)">About</a></li>
     </ul>
-    <ul class="filter-options">
-      <li><a class="active" href="javascript:void(0)">All</a></li>
-      <li><a href="javascript:void(0)">Active</a></li>
-      <li><a href="javascript:void(0)">Completed</a></li>
-      <li><a class="clear-posts" href="javascript:void(0)">Clear Completed</a></li>
+    <!--<ul class="filter-options">-->
+      <!--<li><a class="active" href="javascript:void(0)">All</a></li>-->
+      <!--<li><a href="javascript:void(0)">Active</a></li>-->
+      <!--<li><a href="javascript:void(0)">Completed</a></li>-->
+      <!--<li><a class="clear-posts" href="javascript:void(0)">Clear Completed</a></li>-->
+    <!--</ul>-->
+	<ul ng-controller="tdpFilterCtrl as ctrl"
+		class="filter-options" 
+		ng-click="ctrl.toggleActive($event); ctrl.filterPosts($event)">
+      <li class="active" ng-click="ctrl.filterAll()">All</li>
+      <li ng-click="ctrl.filterActive()">Active</li>
+      <li ng-click="ctrl.filterCompleted()">Completed</li>
+      <li class="clear-posts" ng-click="ctrl.clearCompleted()">Clear Completed</li>
     </ul>
     <div class="creator-info">
       <a class="github-icon" href="https://github.com/gc-client-side/todo-post-app">Source on GitHub</a>

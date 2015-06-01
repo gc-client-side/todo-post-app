@@ -6,5 +6,7 @@
             on-focus="updateIndices"
             length="posts.length"
             draggable="draggable"
-            ng-repeat="(key,post) in posts | filter:query"></tdp-post>
+			ng-repeat="(key,post) in posts | 
+						filter:query |
+						filter:{checked: filterState }"></tdp-post>
 </tdp-canvas>

@@ -7,15 +7,21 @@ function tdpMenu() {
   return {
     replace: true,
     templateUrl: 'app/components/menu/menu.html',
-    link: link
+    controller: MenuController,
+	controllerAs: 'tdpMenu'
   };
 
-  function link(scope) {
-    scope.sideMenuOn = false;
+  MenuController.$inject = ['$scope'];
 
-    scope.toggleSideMenu = function() {
-      scope.sideMenuOn = !scope.sideMenuOn;
-    }
+  function MenuController($scope) {
+	var vm = this;
+    vm.sideMenuOn = false;
+    vm.toggleSideMenu = toggleSideMenu; 
+
+	function toggleSideMenu() {
+		console.log('huhhh');
+      vm.sideMenuOn = !vm.sideMenuOn;
+	}
+
   }
-
 }
