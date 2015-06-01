@@ -13,11 +13,10 @@ function draggable($document) {
       post: '=',
       length: '='
     },
-    link: link,
-    controller: DraggableCtrl
+    link: link
   };
 
-  function link(scope, element, attrs) {
+  function link(scope, element) {
     // init variables
     var post = scope.post,
         pos = post.position,
@@ -69,11 +68,5 @@ function draggable($document) {
       if (post.position.left !== postX && post.position.top !== postY) // if moved
         updatePos(postX, postY);
     }
-
   }
-}
-
-
-function DraggableCtrl($scope) {
-  $scope.click = 232;
 }
