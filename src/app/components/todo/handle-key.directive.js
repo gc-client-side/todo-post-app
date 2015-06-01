@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 angular.module('todoPostApp')
@@ -46,3 +47,4 @@ angular.module('todoPostApp')
       }
     }
   });
+*/

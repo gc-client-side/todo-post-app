@@ -22,9 +22,10 @@ angular.module('todoPostApp')
         //add post when clicking on canvas area only
         if (e.target.id === "canvas") {
           var promise = $scope.posts.$add({
-            //title: '',
-            //description: '',
+            title: '',
+            description: '',
             color: colors[Math.floor(Math.random()*colors.length)],
+            checked: false,
             position: {
               top: e.pageY,
               left: e.pageX,
@@ -45,10 +46,12 @@ angular.module('todoPostApp')
             // remove related subtasks
             var taskList = $scope.taskList;
             taskList.$remove(taskList.$indexFor(ref.key()));
+            // resync posts
             $scope.posts = $firebaseArray(ref.parent());
           });
         }
       };
+
     }
 
     return {

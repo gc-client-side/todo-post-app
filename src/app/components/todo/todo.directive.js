@@ -3,12 +3,23 @@
 angular.module('todoPostApp')
   .directive('tdpPost', function() {
 
-    function PostCtrl($scope) {
-
+    function PostCtrl($scope, $timeout) {
+      var postPromise = null;
       var post = $scope.post;
 
-      $scope.checkPost = function() {
+      $scope.checkPost = function(key) {
         post.checked = !post.checked ;
+        $scope.posts.$save(key);
+      };
+
+      $scope.savePost = function(key) {
+        if (postPromise)
+          $timeout.cancel(postPromise);
+        postPromise = $timeout(save, 500);
+
+        function save() {
+          $scope.posts.$save(key);
+        }
       };
 
       $scope.updatePos = function(left, top) {
@@ -40,10 +51,8 @@ angular.module('todoPostApp')
 		var id = scope.key;
 
 	  //watch for individual post updates
-	  scope.$watch('post', function() {
-		  if (!scope.dragging && !scope.typing) {
-		  	scope.$emit('update', id);
-		  }
+	  scope.$watch('post.position', function() {
+      scope.$emit('update', id);
 	  }, true);
 	}
 

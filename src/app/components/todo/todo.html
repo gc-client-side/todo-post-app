@@ -1,7 +1,7 @@
 <div class="post {{'post-' + post.color}} {{post.checked ? 'post-checked' : ''}}"
      ng-style="post.position"
 	 post="post"
-     handle-keys>
+     >
 
   <div class="post-colors">
     <div class="post-color selected post-{{post.color}}"></div>
@@ -17,10 +17,12 @@
     <i class="fa fa-times" ng-click="removePost(key)"></i>
   </div>
 
-  <input type="text" class="post-title" placeholder="Title" ng-model="post.title" />
+  <input type="text" class="post-title" placeholder="Title"
+         ng-model="post.title" ng-keyup="savePost(key)"/>
   <textarea cols="33" rows="3"
             class="post-description"
             ng-model="post.description"
+            ng-keyup="savePost(key)"
             placeholder="description"></textarea>
 
   <subtasks task-list="taskList" task-id="post.taskId" ></subtasks>
