@@ -54,8 +54,6 @@ function SubtaskCtrl($firebaseArray, $timeout, $interval) {
         })
       }
       vm.newTask = '';
-      /*if (e.keyCode === 'undefined')
-        e.target.parentNode.firstElementChild.focus();*/
     }
   }
 
@@ -79,5 +77,4 @@ function SubtaskCtrl($firebaseArray, $timeout, $interval) {
   function removeSubtask(key) {
     vm.subtasks.$remove(key);
   }
-
 }

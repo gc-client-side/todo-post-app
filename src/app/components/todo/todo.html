@@ -1,6 +1,5 @@
 <div class="post {{'post-' + td.post.color}} {{td.post.checked ? 'post-checked' : ''}}"
      ng-style="td.post.position">
-
   <div class="post-colors">
     <div class="post-color selected post-{{td.post.color}}"></div>
     <choose-color ng-repeat="color in td.colors"
@@ -24,5 +23,4 @@
             placeholder="description"></textarea>
 
   <subtasks task-list="td.taskList" task-id="td.post.taskId" ></subtasks>
-
 </div>

@@ -42,7 +42,7 @@ ul {
   font-family: Arial;
   font-size: 75%;
   color: $light;
-  /*box-shadow: 0.1em 0.15em 0.15em #555;*/
+  box-shadow: 0.1em 0.1em 0.15em #555;
   position: absolute;
   width: $sideLeng;
   min-height: $sideLeng - 2em;
@@ -138,18 +138,6 @@ $post-colors: brown $brown,
 		    color: $fadedColor;
 		}
 
-		&::before {
-			border-color: $color;		
-		}
-
-		&.post-checked::before {
-			border-left-color: transparent;
-			border-top-color: transparent;
-		
-			border-right-color: darken($color, 10%);
-			border-bottom-color: darken($color, 10%);
-		}
-
 		&.post-checked .post-colors {
 			visibility: hidden;		
 		}
@@ -166,8 +154,26 @@ $post-colors: brown $brown,
 			visibility: hidden;		
 		}
 
+		&::before {
+			border-color: $color;		
+			//hacky way of resolving pseudo-element z-index issue
+  			box-shadow: 0.4em 0.4em 0em 0.4em $color,
+						0.1em 0.1em 0.15em #555;
+		}
+
+		&.post-checked::before {
+			border-left-color: transparent;
+			border-top-color: transparent;
+		
+			border-right-color: darken($color, 10%);
+			border-bottom-color: darken($color, 10%);
+  			box-shadow: none;
+		}
+
 		&::after {
 			background: $color;		
+  			box-shadow: 0 0.4em $color,
+						0.1em 0.1em 0.15em #555;
 		}
 	}
 }
@@ -316,12 +322,8 @@ $post-colors: brown $brown,
 	 transition: color 0.1s;
    }
 
-   &.checked .fa-check-circle {
-	  @include icons1;
-   }
-
    &.checked:before {
-	 width: 85%;
+	 width: 75%;
 	 transition: width 0.15s ease-in 0.1s;
    }
 }

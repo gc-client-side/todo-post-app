@@ -1,7 +1,7 @@
 <tdp-canvas ng-transclude>
   <tdp-menu></tdp-menu>
   <tdp-post
-    ng-repeat="(key,post) in canvas.posts | filter:query"
+  ng-repeat="(key,post) in canvas.posts | filter:query | filter: {checked: filterState}"
     posts="canvas.posts"
     post="post"
     key="key"

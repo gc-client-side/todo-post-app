@@ -26,6 +26,7 @@ function postService($firebaseArray, FBURL, $timeout) {
     checkPost: checkPost,
     savePost: savePost,
     removePost: removePost,
+	removeCheckedPosts: removeCheckedPosts,
     updatePosition: updatePosition,
     updateIndices: updateIndices
   };
@@ -34,28 +35,7 @@ function postService($firebaseArray, FBURL, $timeout) {
 
   function addPost(e) {
     if (e.target.id === "canvas") {
-      addToFirebase(e.pageY, e.pageX);
-    }
-
-    function addToFirebase(top, left) {
-      // new post model
-      var newPost = {
-        title: '',
-        description: '',
-        color: colors[Math.floor(Math.random()*colors.length)],
-        checked: false,
-        position: {
-          top: top,
-          left: left,
-          'z-index': posts.length+1
-        }
-      };
-      // create new entry then link to subtasklist
-      posts.$add(newPost).then(addTaskId);
-      // promise function
-      function addTaskId(ref) {
-        ref.update({ taskId: ref.key() });
-      }
+      _addToFirebase(e.pageY, e.pageX);
     }
   }
 
@@ -65,8 +45,9 @@ function postService($firebaseArray, FBURL, $timeout) {
   }
 
   function savePost(key) {
-    if (postPromise)
+	if (postPromise) {
       $timeout.cancel(postPromise);
+	} 
     postPromise = $timeout(save, 500);
 
     function save() {
@@ -74,18 +55,20 @@ function postService($firebaseArray, FBURL, $timeout) {
     }
   }
 
+
   function removePost(key, taskId) {
     if (confirm("Are you sure? Deletes are permanent!")) {
-      removeFromFirebase(key, taskId);
+	  _removeFromFirebase(key, taskId);
     }
+  }
 
-    function removeFromFirebase(key, taskId) {
-      posts.$remove(key).then(removeSync);
-      // promise to remove related subtasks && resync posts
-      function removeSync(ref) {
-        taskList.$remove(taskList.$indexFor(taskId));
-        posts = $firebaseArray(ref.parent());
-      }
+  function removeCheckedPosts() {
+    if (confirm("Are you sure? Deletes are permanent!")) {
+		angular.forEach(posts, function(post, key) {
+			if (post.checked === true) {
+				_removeFromFirebase(key, post.taskId);		
+			}
+		});  
     }
   }
 
@@ -116,5 +99,37 @@ function postService($firebaseArray, FBURL, $timeout) {
     }
   }
 
+  /** 
+   * Private methods  
+   **/
 
+  function _addToFirebase(top, left) {
+    // new post model
+    var newPost = {
+  	title: '',
+  	description: '',
+  	color: colors[Math.floor(Math.random()*colors.length)],
+  	checked: false,
+  	position: {
+  	  top: top,
+  	  left: left,
+  	  'z-index': posts.length+1
+  	   }
+    };
+    // create new entry then link to subtasklist
+    posts.$add(newPost).then(addTaskId);
+    // promise function
+    function addTaskId(ref) {
+  	ref.update({ taskId: ref.key() });
+    }
+  }
+  
+  function _removeFromFirebase(key, taskId) {
+    posts.$remove(key).then(removeSync);
+    // promise to remove related subtasks && resync posts
+    function removeSync(ref) {
+		taskList.$remove(taskList.$indexFor(taskId));
+		posts = $firebaseArray(ref.parent());
+    }
+  }
 }
