@@ -13,9 +13,9 @@ function tdpCanvas() {
   };
 }
 
-CanvasCtrl.$inject = ['$scope', '$firebaseArray', 'FBURL'];
+CanvasCtrl.$inject = ['$firebaseArray', 'FBURL'];
 
-function CanvasCtrl($scope, $firebaseArray, FBURL) {
+function CanvasCtrl($firebaseArray, FBURL) {
   var ref = new Firebase(FBURL),
       postRef = ref.child('posts'),
       tasklistRef = ref.child('tasklist'),
@@ -31,14 +31,6 @@ function CanvasCtrl($scope, $firebaseArray, FBURL) {
   vm.addPost = addPost;
   vm.removePost = removePost;
   //$scope.$on('dragStatus', disableDrag);
-
-  $scope.$on('update', function(e, key) {
-    vm.posts.$save(key);
-  });
-
-  vm.testing = function() {
-    console.log('testing');
-  };
 
   function enableDrag(e) {
     if (e.target.id === "canvas")
