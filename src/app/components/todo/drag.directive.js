@@ -7,17 +7,11 @@ tdpDrag.$inject = ['$document'];
 
 function tdpDrag($document) {
   return {
-    scope: {
-      onMoved: '&',
-      onFocus: '&',
-      post: '=',
-      length: '=',
-      draggable: '='
-    },
+    require: 'tdpPost',
     link: link
   };
 
-  function link(scope, element) {
+  function link(scope, element, attrs, td) {
     // init variables
     var post = scope.post,
         pos = post.position,
@@ -31,25 +25,24 @@ function tdpDrag($document) {
      * how to pass in argument to expression:
      * http://stackoverflow.com/questions/17556703/angularjs-directive-call-function-specified-in-attribute-and-pass-an-argument-to
      */
-    var updatePos = scope.onMoved(),
-        updateIndices = scope.onFocus();
+    /*var updatePos = scope.onMoved(),
+        updateIndices = scope.onFocus();*/
 
     element.on('mousedown', function(e) {
-      if (scope.draggable)
-        mousedown(e);
+      mousedown(e);
     });
 
     function mousedown(e) {
       startX = e.pageX - postX;
       startY = e.pageY - postY;
 
-      var oldIndex = post.position['z-index'];
+      var oldIndex = post.position['z-index'],
+          topIndex = td.posts.length;
       // if moving same post, do nothing with index
-      if (oldIndex !== scope.length) {
+      if (oldIndex !== topIndex) {
         // due to ajax delay, use css to set on top first
-        element.css({'z-index': scope.length+1});
-        post.position['z-index'] = scope.length; // refact
-        updateIndices(oldIndex);
+        element.css({'z-index': topIndex+1});
+        td.updateIndices(oldIndex, topIndex);
       }
 
       $document.on('mousemove', mousemove);
@@ -72,10 +65,11 @@ function tdpDrag($document) {
       $document.off('mouseup', mouseup);
       // if moved
       if (post.position.left !== postX && post.position.top !== postY) {
-        updatePos(postX, postY);
-      } else {
-        scope.$emit('dragStatus', false);
+        td.updatePos(postX, postY);
       }
+      /*else {
+        scope.$emit('dragStatus', false);
+      }*/
     }
   } /* end link */
 }

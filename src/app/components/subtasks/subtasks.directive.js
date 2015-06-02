@@ -9,32 +9,33 @@ function subtasks() {
   // directive config
   return {
     scope: {
-      taskId: '=',
-      taskList: '='
+      taskList: '=',
+      taskId: '='
     },
     templateUrl: 'app/components/subtasks/subtasks.html',
     controller: SubtaskCtrl,
-    controllerAs: 'task',
+    controllerAs: 'st',
     bindToController: true
   };
 }
 
-SubtaskCtrl.$inject = ['$scope', '$firebaseArray', '$timeout'];
+SubtaskCtrl.$inject = ['$firebaseArray', '$timeout', '$interval'];
 
-function SubtaskCtrl($scope, $firebaseArray, $timeout) {
-  var vm = this;
-  var ajaxPromise = null;
-  vm.subtasks = [];
+function SubtaskCtrl($firebaseArray, $timeout, $interval) {
+  var vm = this,
+      ajaxPromise,
+      loadSubtasks;
 
-  // need to watch id, due to new post id updated with promise @addPost()
-  $scope.$watch('taskId', function() {
-    if ($scope.taskId) {
-      var subtasksRef = main.taskList.$ref().child($scope.taskId);
-      vm.subtasks = $firebaseArray(subtasksRef);
+  loadSubtasks = $interval(checkId, 200);
+
+  function checkId() {
+    if (vm.taskId) {
+      vm.subtasks = $firebaseArray(vm.taskList.$ref().child(vm.taskId));
+      $interval.cancel(loadSubtasks);
+    } else {
+      vm.subtasks = [];
     }
-  });
-
-
+  }
 
   // Add, Check, Remove functions
   vm.addSubtask = addSubtask;

@@ -8,59 +8,54 @@ function tdpPost() {
     scope: {
       posts: '=',
       post: '=',
-      key: '='
+      key: '=',
+      taskList: '=',
+      onRemove: '&'
     },
     replace: true,
     templateUrl: 'app/components/todo/todo.html',
     controller: TodoPostCtrl,
     controllerAs: 'td',
-    bindToController: true,
-    link: link
+    bindToController: true
   };
-
-  function link(scope, element, attrs, todo) {
-    var id = scope.key;
-
-    //watch for individual post (position) updates
-    scope.$watch('post.position', function() {
-      scope.$emit('update', id);
-    }, true);
-  }
 }
 
-TodoPostCtrl.$inject = ['$scope', '$timeout'];
+TodoPostCtrl.$inject = ['$timeout'];
 
-function TodoPostCtrl($scope, $timeout) {
-  var vm = this;
-  var postPromise = null;
+function TodoPostCtrl($timeout) {
+  var vm = this,
+      key = vm.key,
+      postPromise;
 
+  vm.colors = ['brown', 'orange', 'blue', 'light-blue',
+    'green', 'purple', 'yellow'];
   vm.checkPost = checkPost;
   vm.savePost = savePost;
   vm.updatePos = updatePos;
   vm.updateIndices = updateIndices;
 
-
-  function checkPost(key) {
-    vm.posts[key].checked = !post.checked ;
-    main.posts.$save(key);
+  function checkPost() {
+    vm.posts[key].checked = !vm.post.checked ;
+    vm.posts.$save(key);
   }
 
-  function savePost(key) {
+  function savePost() {
     if (postPromise)
       $timeout.cancel(postPromise);
     postPromise = $timeout(save, 500);
 
     function save() {
-      main.posts.$save(key);
+      vm.posts.$save(key);
     }
   }
 
   function updatePos(left, top) {
-    post.position.left = left;
-    post.position.top = top;
+    vm.post.position.left = left;
+    vm.post.position.top = top;
+    vm.posts.$save(key);
   }
 
-  function updateIndices(oldIndex) {
+  function updateIndices(oldIndex, topIndex) {
     /**
      * new implementation where index decrease by 1 only if greater than the one being moved
      *
@@ -69,11 +64,13 @@ function TodoPostCtrl($scope, $timeout) {
      *  clicking between 2 posts changes others' indices
      *  now removing a post also re-index
      */
-    var id = post.$id;
-    angular.forEach(main.posts, function(post) {
+    vm.post.position['z-index'] = topIndex;
+    vm.posts.$save(key);
+    angular.forEach(vm.posts, function(post, id) {
       // not to set z-index again for the clicked post
-      if (id !== post.$id && post.position['z-index'] > oldIndex) {
+      if (id !== key && post.position['z-index'] > oldIndex) {
         post.position['z-index'] -= 1;
+        vm.posts.$save(id);
       }
     })
   }

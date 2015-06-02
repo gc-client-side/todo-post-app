@@ -17,5 +17,4 @@ function tdpMenu() {
       scope.sideMenuOn = !scope.sideMenuOn;
     }
   }
-
 }

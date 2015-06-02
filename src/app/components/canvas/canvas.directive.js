@@ -7,7 +7,7 @@ function tdpCanvas() {
   return {
     replace: true,
     transclude: true,
-    template: '<main id="canvas" ng-click="enableDrag($event)" ng-dblclick="addPost($event)"></main>',
+    template: '<main id="canvas" ng-click="enableDrag($event)" ng-dblclick="canvas.addPost($event)"></main>',
     controller: CanvasCtrl,
     controllerAs: 'canvas'
   };
@@ -23,16 +23,22 @@ function CanvasCtrl($scope, $firebaseArray, FBURL) {
                 'green', 'purple', 'yellow'];
 
   var vm = this;
-
-  vm.colors = colors;
   vm.posts = $firebaseArray(postRef);
   vm.taskList = $firebaseArray(tasklistRef);
   vm.draggable = true;
 
-  vm.enableDrag = enableDrag;
+  //vm.enableDrag = enableDrag;
   vm.addPost = addPost;
   vm.removePost = removePost;
-  $scope.$on('dragStatus', disableDrag);
+  //$scope.$on('dragStatus', disableDrag);
+
+  $scope.$on('update', function(e, key) {
+    vm.posts.$save(key);
+  });
+
+  vm.testing = function() {
+    console.log('testing');
+  };
 
   function enableDrag(e) {
     if (e.target.id === "canvas")
@@ -46,7 +52,7 @@ function CanvasCtrl($scope, $firebaseArray, FBURL) {
   function addPost(e) {
     //add post when clicking on canvas area only
     if (e.target.id === "canvas") {
-      var promise = main.posts.$add({
+      var promise = vm.posts.$add({
         title: '',
         description: '',
         color: colors[Math.floor(Math.random()*colors.length)],
@@ -54,7 +60,7 @@ function CanvasCtrl($scope, $firebaseArray, FBURL) {
         position: {
           top: e.pageY,
           left: e.pageX,
-          'z-index': main.posts.length+1
+          'z-index': vm.posts.length+1
         }
       });
       promise.then(function(ref) {
@@ -65,14 +71,13 @@ function CanvasCtrl($scope, $firebaseArray, FBURL) {
     }
   }
 
-  function removePost(key) {
+  function removePost(key, taskId) {
     if (confirm("Are you sure? Deletes are permanent!")) {
-      main.posts.$remove(key).then(function(ref) {
+      vm.posts.$remove(key).then(function(ref) {
+        vm.taskList.$remove(vm.taskList.$indexFor(taskId));
         // remove related subtasks
-        var taskList = main.taskList;
-        taskList.$remove(taskList.$indexFor(ref.key()));
         // resync posts
-        main.posts = $firebaseArray(ref.parent());
+        vm.posts = $firebaseArray(ref.parent());
       });
     }
   }

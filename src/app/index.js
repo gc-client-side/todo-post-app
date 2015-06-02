@@ -14,7 +14,7 @@ angular.module('todoPostApp', [
   'firebase'
 ])
   .config(configure)
-  .constant('FBURL', 'https://whatever.firebaseio-demo.com/');
+  .constant('FBURL', 'https://whatevermyman.firebaseio-demo.com/');
 // constant so only need to change URL in one place
 
 configure.$inject = ['$routeProvider'];

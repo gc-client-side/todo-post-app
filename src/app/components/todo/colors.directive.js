@@ -5,15 +5,14 @@ angular.module('todoPostApp')
 
 function chooseColor() {
   return {
-    scope: {
-      post: '='
-    },
     link: link
   };
 
   function link(scope,element,attr) {
     element.on('click', function() {
-      scope.post.color = attr.color;
+      var vm = scope.td;
+      vm.post.color = attr.color;
+      vm.posts.$save(vm.key);
       scope.$apply();
     })
   }
