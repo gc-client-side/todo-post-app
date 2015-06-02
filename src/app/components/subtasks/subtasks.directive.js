@@ -19,23 +19,11 @@ function subtasks() {
   };
 }
 
-SubtaskCtrl.$inject = ['$firebaseArray', '$timeout', '$interval'];
+SubtaskCtrl.$inject = ['$interval', 'subtaskService'];
 
-function SubtaskCtrl($firebaseArray, $timeout, $interval) {
-  var vm = this,
-      ajaxPromise,
-      loadSubtasks;
-
-  loadSubtasks = $interval(checkId, 200);
-
-  function checkId() {
-    if (vm.taskId) {
-      vm.subtasks = $firebaseArray(vm.taskList.$ref().child(vm.taskId));
-      $interval.cancel(loadSubtasks);
-    } else {
-      vm.subtasks = [];
-    }
-  }
+function SubtaskCtrl($interval, subtaskService) {
+  var vm = this;
+  var loadSubtasks = $interval(checkId, 200);
 
   // Add, Check, Remove functions
   vm.addSubtask = addSubtask;
@@ -43,41 +31,32 @@ function SubtaskCtrl($firebaseArray, $timeout, $interval) {
   vm.saveSubtask = saveSubtask;
   vm.removeSubtask = removeSubtask;
 
+  function checkId() {
+    if (vm.taskId) {
+      vm.subtasks = subtaskService.loadSubtasks(vm.taskList, vm.taskId);
+      $interval.cancel(loadSubtasks);
+    } else {
+      vm.subtasks = [];
+    }
+  }
+
   function addSubtask(e) {
     if (e.keyCode === 13 || e.type === 'click') {
-      var value = vm.newTask;
-      // make sure value is not undefined first before trim()
-      if (value && value.trim()) {
-        vm.subtasks.$add({
-          name: value,
-          checked: false
-        })
-      }
+      subtaskService.addSubtask(vm.subtasks, vm.newTask);
       vm.newTask = '';
-      /*if (e.keyCode === 'undefined')
-        e.target.parentNode.firstElementChild.focus();*/
     }
   }
 
   function checkSubtask(key) {
-    var subtasks = vm.subtasks;
-    subtasks[key].checked = !subtasks[key].checked;
-    subtasks.$save(key);
+    subtaskService.checkSubtask(vm.subtasks, key);
   }
 
   function saveSubtask(key) {
-    if (ajaxPromise)
-      $timeout.cancel(ajaxPromise);
-
-    ajaxPromise = $timeout(save, 500);
-
-    function save() {
-      vm.subtasks.$save(key);
-    }
+      subtaskService.saveSubtask(vm.subtasks, key);
   }
 
   function removeSubtask(key) {
-    vm.subtasks.$remove(key);
+    subtaskService.removeSubtask(vm.subtasks, key);
   }
 
 }
