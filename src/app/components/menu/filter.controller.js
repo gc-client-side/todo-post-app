@@ -35,7 +35,6 @@ angular.module('todoPostApp')
 		}
 
 		function clearCompleted() {
-			var posts = $rootScope.posts;
 			postService.removeCheckedPosts();
 		}
 

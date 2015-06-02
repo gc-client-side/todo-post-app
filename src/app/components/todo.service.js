@@ -128,8 +128,9 @@ function postService($firebaseArray, FBURL, $timeout) {
     posts.$remove(key).then(removeSync);
     // promise to remove related subtasks && resync posts
     function removeSync(ref) {
-		taskList.$remove(taskList.$indexFor(taskId));
-		posts = $firebaseArray(ref.parent());
+		taskList.$remove(taskList.$indexFor(taskId)).then(function() {
+			posts = $firebaseArray(ref.parent());
+		});
     }
   }
 }
