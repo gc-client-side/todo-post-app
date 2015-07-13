@@ -94,7 +94,7 @@ ul {
 
   &::after {
 	content: '';
-  	width: $sideLeng - $cornerLeng;
+  	width: 22em;
 	height: $cornerLeng;
 	top: -$cornerLeng; 
 	right: 0;
@@ -195,7 +195,7 @@ $post-colors: brown $brown,
 				opacity 0.2s linear;
 
 	&:hover {
-		width: 14em;
+		width: 16em;
 		transition: width 0.15s linear;
 	}
 }
@@ -270,7 +270,7 @@ $post-colors: brown $brown,
     right: 0;
     bottom: 0.02em;
     font-size: 1.3em;
-	line-height: 0.8;
+    line-height: 0.8;
     color: $light;
     @include clean;
 
@@ -293,8 +293,7 @@ $post-colors: brown $brown,
 	position: relative;
 
 	> input {
-		font-size: 1em;
-		padding-left: 0.5em;
+    width: 16em;
 	}
 
 	.fa {
