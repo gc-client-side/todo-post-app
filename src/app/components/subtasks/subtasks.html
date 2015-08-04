@@ -7,8 +7,11 @@
   <li ng-repeat="(key,subtask) in st.subtasks"
       class="subtask {{subtask.checked ? 'checked' : ''}}">
     <input type="text" ng-model="subtask.name" ng-change="st.saveSubtask(key)"/>
-    <!-- maybe ng-change? -->
-    <i class="fa fa-check-circle" ng-click="st.checkSubtask(key)"></i>
-    <i class="fa fa-times" ng-click="st.removeSubtask(key)"></i>
+    <div class="subtask-btns">
+      <ng-include class="ng-btn ng-btn--xs" src="'assets/icons/check-icon.svg'"
+        ng-click="st.checkSubtask(key)"></ng-include>
+      <ng-include class="ng-btn ng-btn--xs" src="'assets/icons/delete-icon.svg'" ng-click="st.removeSubtask(key)">
+      </ng-include>
+    </div>
   </li>
 </ul>

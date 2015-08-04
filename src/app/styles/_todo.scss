@@ -6,22 +6,6 @@ $sideLeng: 21em;
   background: transparent  
 }
 
-/* stages for icon visbility */ 
-@mixin icons1 {
-	opacity: 0;
-	visibility: hidden;
-}
-
-@mixin icons2 {
-	opacity: 0.6;
-	transition: opacity 0.2s;
-	visibility: visible;
-}
-
-@mixin icons3 {
-	opacity: 1;
-	transition: opacity 0.1s;
-}
 
 /* retrieves placeholder color for posts */
 @mixin placeholderColor($color) {
@@ -61,10 +45,6 @@ ul {
   
   &:hover {
 	  cursor: pointer;
-
-	  .fa {
-	  	@include icons2;
-	  }
 
 	  .post-colors {
 	  	opacity: 1;
@@ -149,11 +129,6 @@ $post-colors: brown $brown,
 			color: $fadedColor;
 		} 
 
-		//hide subtask icons
-		&.post-checked .subtask .fa {
-			visibility: hidden;		
-		}
-
 		&::before {
 			border-color: $color;		
 			//hacky way of resolving pseudo-element z-index issue
@@ -230,16 +205,24 @@ $post-colors: brown $brown,
 	right: 0.5em;
 	top: -1.5em;
 	position: absolute;
+}
 
-	.fa {
-		color: white;
-		line-height: 1;
-		@include icons1;
+.ng-btn {
+  >svg {
+    width: 1em;
+    height: 1em;
+  }
+}
 
-		&:hover {
-			@include icons3;
-		}
-	}
+.subtask-btns {
+  float: right;
+}
+
+.ng-btn--xs {
+  >svg {
+    width: 1em;
+    height: 1em;
+  }
 }
 
 .post-title {
@@ -293,20 +276,7 @@ $post-colors: brown $brown,
 	position: relative;
 
 	> input {
-    width: 16em;
-	}
-
-	.fa {
-		@include icons1;
-	}
-
-	&:hover .fa {
-		visibility: visible;
-		@include icons2;
-
-	 &:hover {
-		 @include icons3;
-	 }
+    width: 80%;
 	}
 
    &:before {
@@ -322,7 +292,7 @@ $post-colors: brown $brown,
    }
 
    &.checked:before {
-	 width: 75%;
+	 width: 80%;
 	 transition: width 0.15s ease-in 0.1s;
    }
 }

@@ -10,8 +10,11 @@
   </div>
 
   <div class="post-buttons">
-    <i class="fa fa-check-circle" ng-click="td.checkPost(td.key)"></i>
-    <i class="fa fa-times" ng-click="td.onRemove({key: td.key, taskId: td.post.taskId})"></i>
+    <ng-include class="ng-btn" src="'assets/icons/check-icon.svg'"
+       ng-click="td.checkPost(td.key)"></ng-include>
+    <ng-include class="ng-btn" src="'assets/icons/delete-icon.svg'"
+       ng-click="td.onRemove({key: td.key, taskId: td.post.taskId})">
+    </ng-include>
   </div>
 
   <input type="text" class="post-title" placeholder="Title"
