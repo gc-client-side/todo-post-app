@@ -33,6 +33,9 @@ function postService($firebaseArray, FBURL, $timeout) {
 
   ////////////////
 
+  /**
+   * self explanatory functions
+   */
   function addPost(e) {
     if (e.target.id === "canvas") {
       _addToFirebase(e.pageY, e.pageX);

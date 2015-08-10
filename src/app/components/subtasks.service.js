@@ -1,3 +1,7 @@
+/**
+ * Subtask Service
+ * @namespace Services
+ */
 'use strict';
 
 angular
@@ -6,6 +10,10 @@ angular
 
 subtaskService.$inject = ['$firebaseArray', '$timeout'];
 
+/**
+ * @namespace Subtask
+ * @desc subtask functions that can be used across the app
+ */
 /* @ngInject */
 function subtaskService($firebaseArray, $timeout) {
   var ajaxPromise;
@@ -18,12 +26,12 @@ function subtaskService($firebaseArray, $timeout) {
     removeSubtask: removeSubtask
   };
 
-  ////////////////
-
+  // load subtask from cloud storage to local array 
   function loadSubtasks(taskList, taskId) {
     return $firebaseArray(taskList.$ref().child(taskId));
   }
 
+  // function for adding subtasks
   function addSubtask(subtasks, value) {
     // make sure value is not undefined first before trim()
     if (value && value.trim()) {
@@ -34,11 +42,13 @@ function subtaskService($firebaseArray, $timeout) {
     }
   }
 
+  // complete subtask, check and uncheck
   function checkSubtask(subtasks, key) {
     subtasks[key].checked = !subtasks[key].checked;
     subtasks.$save(key);
   }
 
+  // save subtask to database
   function saveSubtask(subtasks, key) {
     if (ajaxPromise)
       $timeout.cancel(ajaxPromise);

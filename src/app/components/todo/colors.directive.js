@@ -3,6 +3,9 @@
 angular.module('todoPostApp')
   .directive('chooseColor', chooseColor);
 
+/**
+ * @desc Color option reusable directive
+ */
 function chooseColor() {
   return {
     link: link

@@ -27,6 +27,9 @@ function TodoPostCtrl(postService) {
   var vm = this;
 
 
+  /**
+   * logic astract to service
+   */
   vm.colors = postService.postColors;
   vm.checkPost = postService.checkPost;
   vm.savePost = postService.savePost;
