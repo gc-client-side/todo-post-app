@@ -15,6 +15,10 @@ function tdpCanvas() {
 
 CanvasCtrl.$inject = ['postService'];
 
+/**
+ * controller on canvas handles smooth dragging and post creation/deletion
+ */
+
 function CanvasCtrl(postService) {
 
   var vm = this;

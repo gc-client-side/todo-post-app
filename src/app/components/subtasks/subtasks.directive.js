@@ -3,7 +3,11 @@
 angular.module('todoPostApp')
   .directive('subtasks', subtasks);
 
-//subtasks.$inject = ['$firebaseArray'];
+/**
+ * firebase is better at syncing w/ one list at a time
+ * so every subtask list is treated as a 
+ * separate entity from the larger list of posts
+ */
 
 function subtasks() {
   // directive config
@@ -25,7 +29,7 @@ function SubtaskCtrl($interval, subtaskService) {
   var vm = this;
   var loadSubtasks = $interval(checkId, 200);
 
-  // Add, Check, Remove functions
+  // CRUD operations
   vm.addSubtask = addSubtask;
   vm.checkSubtask = checkSubtask;
   vm.saveSubtask = saveSubtask;
@@ -40,6 +44,7 @@ function SubtaskCtrl($interval, subtaskService) {
     }
   }
 
+  // add subtask upon pressing enter key or clicking the plus btn
   function addSubtask(e) {
     if (e.keyCode === 13 || e.type === 'click') {
       subtaskService.addSubtask(vm.subtasks, vm.newTask);

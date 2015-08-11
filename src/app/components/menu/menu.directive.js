@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * main menu + side menu for tablets
+ */
 angular.module('todoPostApp')
 	.directive('tdpMenu', tdpMenu);
 

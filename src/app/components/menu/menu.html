@@ -20,17 +20,15 @@
   <!-- Side Menu -->
   <nav class="side-menu" role="navigation" ng-hide="tdpMenu.sideMenuOn">
     <a href="/" class="app-name">TodoPostIt</a>
-    <ul class="user-actions">
-      <li><a href="javascript:void(0)">Sign Up</a></li>
-      <li><a href="javascript:void(0)">Log In</a></li>
-      <li><a href="javascript:void(0)">About</a></li>
-    </ul>
-    <!--<ul class="filter-options">-->
-      <!--<li><a class="active" href="javascript:void(0)">All</a></li>-->
-      <!--<li><a href="javascript:void(0)">Active</a></li>-->
-      <!--<li><a href="javascript:void(0)">Completed</a></li>-->
-      <!--<li><a class="clear-posts" href="javascript:void(0)">Clear Completed</a></li>-->
+
+	<!-- on another day... -->
+
+    <!--<ul class="user-actions">-->
+      <!--<li><a href="javascript:void(0)">Sign Up</a></li>-->
+      <!--<li><a href="javascript:void(0)">Log In</a></li>-->
+      <!--<li><a href="javascript:void(0)">About</a></li>-->
     <!--</ul>-->
+
 	<ul ng-controller="tdpFilterCtrl as ctrl"
 		class="filter-options" 
 		ng-click="ctrl.toggleActive($event); ctrl.filterPosts($event)">

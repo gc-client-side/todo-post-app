@@ -1,5 +1,7 @@
 'use strict';
-
+/**
+ * handles post filtering (all, active, completed, clear complete) 
+ */
 angular.module('todoPostApp')
 	.controller('tdpFilterCtrl', tdpFilterCtrl)
 
@@ -14,6 +16,7 @@ angular.module('todoPostApp')
 		vm.filterCompleted = filterCompleted;
 		vm.clearCompleted = clearCompleted;
 
+		//handles filter button styles on click 
 		function toggleActive(e) {
 			var filters = angular.element(e.currentTarget).children();
 			var selected = e.target;
@@ -22,6 +25,7 @@ angular.module('todoPostApp')
 			selected.className += ' active';
 		}
 
+		//for use of 'filterState' check main/main.html
 		function filterAll(e) {
 			$rootScope.filterState = '';	
 		}
